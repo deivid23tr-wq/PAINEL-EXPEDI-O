@@ -848,7 +848,7 @@ tr:hover td{background:#F9FCFF;}
 #page-producao .kpi-value.red{color:var(--red)}
 #page-producao .kpi-value.indigo{color:#4F46E5}
 #page-producao .kpi-sub{font-size:12px;color:var(--text4);margin-top:6px;}
-#page-producao .ocu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+#page-producao .ocu-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;}
 #page-producao .ocu-card{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:20px 22px;box-shadow:var(--sh);}
 #page-producao .ocu-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 #page-producao .ocu-tipo{font-size:14px;font-weight:700;color:var(--text);}
@@ -2157,7 +2157,7 @@ function analisar(){
 
 // ── TESTE: AÇÃO CONSOLIDADA POR CLIENTE (mantém layout atual) ─────────────────
 function recalcularAcaoPorCliente(){
-  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
+  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
   const norm  = s => limpa(s).toUpperCase();
   const resumo = {};
   const mb52PorMat = {};
@@ -2262,7 +2262,7 @@ function renderBitremSummary(){
   const tb   = document.getElementById('bBitremSummary');
   if(!card || !tb) return;
 
-  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
+  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
   const norm  = s => limpa(s).toUpperCase();
 
   const TIPO_PAL = {
@@ -3482,7 +3482,7 @@ setInterval(function(){
 
 
 <script>
-const CAPACIDADE={'LATA':{cap:15504},'TAMPA':{cap:1068},'TAMPA BÁSICA':{cap:684}};
+const CAPACIDADE={'LATA':{cap:15504},'TAMPA':{cap:1068},'TAMPA BÁSICA':{cap:684},'NSA':{cap:8500}};
 const KEY_HIST='br3r-prod-historico',KEY_MB52='br3r-prod-mb52',KEY_ZTSD123='br3r-prod-ztsd123',KEY_GRADE='br3r-prod-grade',KEY_ZTPP='br3r-prod-ztpp0011';
 let dadosMB52=null,chartsP={};
 
@@ -3564,6 +3564,8 @@ function loadMB52(inp){
       const livre=numeroSeguro(r['Utilização livre'] ?? r['Utilizacao livre'] ?? r['Livre utilização'] ?? r['Livre utilizacao'] ?? 0);
       const qualidade=numeroSeguro(r['Em contr.qualidade'] ?? r['Em contr. qualidade'] ?? r['Controle qualidade'] ?? 0);
       const bloqueado=numeroSeguro(r['Bloqueado'] ?? 0);
+      const estoqueEspecial=String(r['Estoque especial'] ?? '').trim();
+      const estoqueEspecialNumero=String(r['Nº estoque especial'] ?? r['No estoque especial'] ?? r['N estoque especial'] ?? '').trim();
 
       livreTotal+=livre;
       qualidadeTotal+=qualidade;
@@ -3575,6 +3577,8 @@ function loadMB52(inp){
         livre,
         qualidade,
         bloqueado,
+        estoqueEspecial,
+        estoqueEspecialNumero,
         total: livre+qualidade+bloqueado
       });
 
@@ -3596,6 +3600,7 @@ function loadMB52(inp){
     });
 
     const ocupacao = calcularOcupacaoMB52(rows);
+    const ocupacaoNSA = calcularOcupacaoNSA(rows);
 
     const saldoPorSKU=Object.values(porMaterial)
       .map(item=>({
@@ -3627,13 +3632,16 @@ function loadMB52(inp){
       lata: ocupacao.estoqueMI['LATA']||0,
       tampa: ocupacao.estoqueMI['TAMPA']||0,
       tampaBasica: ocupacao.estoqueMI['TAMPA BÁSICA']||0,
+      nsaEstoque: ocupacaoNSA.estoqueMI||0,
+      nsaPallets: ocupacaoNSA.ocupados||0,
+      nsaResumo: ocupacaoNSA,
       pallets: ocupacao.pallets,
       resumoOcupacao: ocupacao.resumo
     };
 
     localStorage.setItem(KEY_MB52,JSON.stringify(dadosMB52));
     document.getElementById('uz-mb52p').classList.add('ok');
-    document.getElementById('ok-mb52p').textContent=`✅ ${rows.length} materiais · LATA ${fmtN(dadosMB52.pallets['LATA'])} | TAMPA ${fmtN(dadosMB52.pallets['TAMPA'])} | BÁSICA ${fmtN(dadosMB52.pallets['TAMPA BÁSICA'])}`;
+    document.getElementById('ok-mb52p').textContent=`✅ ${rows.length} materiais · LATA ${fmtN(dadosMB52.pallets['LATA'])} | TAMPA ${fmtN(dadosMB52.pallets['TAMPA'])} | BÁSICA ${fmtN(dadosMB52.pallets['TAMPA BÁSICA'])} | NSA ${fmtN(dadosMB52.nsaPallets||0)}`;
     document.getElementById('ok-mb52p').style.display='block';
     document.getElementById('btnProcessar').disabled=false;
   }catch(ex){alert('Erro MB52: '+ex.message);}};
@@ -3921,12 +3929,44 @@ function classificarTipoOcupacao(material,descricao){
   return 'LATA';
 }
 
+
+function calcularOcupacaoNSA(rows){
+  let pallets=0, estoqueMI=0;
+  const filtro=(rows||[]).filter(item=>String(item.estoqueEspecialNumero||'').trim()==='72767');
+  filtro.forEach(item=>{
+    const material=item.material||'';
+    const descricao=item.descricao||'';
+    const tipo=classificarTipoOcupacao(material,descricao);
+    const total=numeroSeguro(item.total);
+    estoqueMI+=total;
+
+    if(tipo==='LATA'){
+      const ml=detectarMlLata(material,descricao);
+      pallets+= total/conversaoPalletLata(ml);
+      return;
+    }
+    pallets+= total/conversaoPalletTampa(tipo);
+  });
+
+  pallets=Math.round(pallets);
+
+  return {
+    ocupados:pallets,
+    estoqueMI:Math.round(estoqueMI*1000)/1000,
+    cap:CAPACIDADE['NSA'].cap,
+    pct:CAPACIDADE['NSA'].cap ? (pallets/CAPACIDADE['NSA'].cap)*100 : 0
+  };
+}
+
 function calcularOcupacaoMB52(rows){
   const pallets={'LATA':0,'TAMPA':0,'TAMPA BÁSICA':0};
   const estoqueMI={'LATA':0,'TAMPA':0,'TAMPA BÁSICA':0};
   const topMateriais=[];
 
   (rows||[]).forEach(item=>{
+    const estoqueEspecial=String(item.estoqueEspecialNumero||'').trim();
+    if(estoqueEspecial==='72767') return;
+
     const material=item.material||'';
     const descricao=item.descricao||'';
     const tipo=classificarTipoOcupacao(material,descricao);
@@ -3980,11 +4020,11 @@ function calcularOcupacaoMB52(rows){
 
 function obterEstoqueLabel(tipo,mb52){
   if(!mb52) return '';
-  const valor = tipo==='LATA'
-    ? numeroSeguro(mb52.lata)
-    : tipo==='TAMPA'
-      ? numeroSeguro(mb52.tampa)
-      : numeroSeguro(mb52.tampaBasica);
+  let valor = 0;
+  if(tipo==='LATA') valor = numeroSeguro(mb52.lata);
+  else if(tipo==='TAMPA') valor = numeroSeguro(mb52.tampa);
+  else if(tipo==='TAMPA BÁSICA') valor = numeroSeguro(mb52.tampaBasica);
+  else if(tipo==='NSA') valor = numeroSeguro(mb52.nsaEstoque);
   return valor>0 ? `<div style="font-size:10px;color:var(--text3);margin-top:6px;">📦 ${fmtMI(valor)} MI estoque</div>` : '';
 }
 
@@ -3999,7 +4039,8 @@ function renderOcupacao(mb52){
   const dados=[
     {tipo:'LATA',ocupados:resumo['LATA']?.ocupados||0,cap:CAPACIDADE['LATA'].cap},
     {tipo:'TAMPA',ocupados:resumo['TAMPA']?.ocupados||0,cap:CAPACIDADE['TAMPA'].cap},
-    {tipo:'TAMPA BÁSICA',ocupados:resumo['TAMPA BÁSICA']?.ocupados||0,cap:CAPACIDADE['TAMPA BÁSICA'].cap}
+    {tipo:'TAMPA BÁSICA',ocupados:resumo['TAMPA BÁSICA']?.ocupados||0,cap:CAPACIDADE['TAMPA BÁSICA'].cap},
+    {tipo:'NSA',ocupados:numeroSeguro(mb52?.nsaPallets),cap:CAPACIDADE['NSA'].cap}
   ];
   document.getElementById('ocu-grid').innerHTML=dados.map(d=>{
     const pctReal=d.cap?((d.ocupados/d.cap)*100):0;
