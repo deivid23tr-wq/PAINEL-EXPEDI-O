@@ -436,7 +436,6 @@ select:focus{border-color:var(--blue);}
 }
 .doca-mat-inp:focus{border-color:var(--green);}
 
-.btn-vbs{font-size:9px;padding:3px 8px;background:var(--blue-bg);border:1px solid var(--blue-bdr);color:var(--blue);border-radius:5px;cursor:pointer;font-weight:700;}
 .btn-liberar{font-size:9px;padding:3px 8px;background:var(--green-bg);border:1px solid var(--green-bdr);color:var(--green);border-radius:5px;cursor:pointer;font-weight:700;}
 
 /* compat pill (hidden) */
@@ -745,11 +744,11 @@ tr:hover td{background:#F9FCFF;}
   padding:6px 11px;border-radius:999px;
   font-size:11px;font-weight:800;
 }
-.btn-send,.btn-vbs,.btn-liberar,.btn-op{
+.btn-send,.btn-liberar,.btn-op{
   border-radius:13px;font-weight:800;
   transition:transform .16s ease, box-shadow .16s ease, filter .16s ease;
 }
-.btn-send:hover,.btn-vbs:hover,.btn-liberar:hover,.btn-op:hover{transform:translateY(-1px);}
+.btn-send:hover,.btn-liberar:hover,.btn-op:hover{transform:translateY(-1px);}
 
 /* modal */
 #modalEnvio{background:rgba(15,38,58,.34);backdrop-filter:blur(10px);}
@@ -1003,6 +1002,163 @@ tr:hover td{background:#F9FCFF;}
   #page-producao .info-bar{flex-wrap:wrap;}
 }
 
+
+/* ── RESUMO DE VEÍCULOS POR CLIENTE ───────────────────────────── */
+#bitremSummaryCard .table-wrap{padding:0 10px 10px;overflow-x:auto;}
+#tBitremSummary{width:100%;border-collapse:separate;border-spacing:0 10px;table-layout:auto;}
+#tBitremSummary thead th{position:sticky;top:0;z-index:2;background:transparent;vertical-align:bottom;}
+#tBitremSummary tbody td{vertical-align:middle;line-height:1.35;}
+#tBitremSummary tbody tr:hover td{background:#F7FBFF;}
+#tBitremSummary tbody tr td:first-child{min-width:140px;}
+#tBitremSummary tbody tr td:nth-child(2){min-width:140px;}
+#tBitremSummary tbody tr td:nth-child(5),
+#tBitremSummary tbody tr td:nth-child(4),
+#tBitremSummary tbody tr td:nth-child(3){font-variant-numeric:tabular-nums;}
+.summary-chip{background:var(--blue-bg);color:var(--blue);border-radius:999px;padding:3px 8px;font-size:11px;font-weight:800;white-space:nowrap;display:inline-flex;align-items:center;gap:4px;}
+.summary-muted{font-size:10px;color:var(--text3);margin-top:3px;display:block;}
+.summary-pct{font-size:15px;font-weight:800;color:var(--text2);}
+.summary-bar{height:5px;border-radius:999px;background:var(--border2);margin-top:6px;overflow:hidden;}
+.summary-bar > span{display:block;height:100%;border-radius:999px;}
+.summary-status{display:inline-flex;justify-content:center;min-width:118px;}
+.summary-client{font-weight:800;font-size:14px;line-height:1.25;color:var(--text);}
+.summary-client-desc{display:block;margin-top:6px;font-size:11px;line-height:1.45;color:var(--text3);font-weight:600;max-width:320px;}
+.summary-falta{font-size:12px;font-weight:800;line-height:1.35;}
+.summary-falta.red{color:var(--red);}
+.summary-falta.amber{color:var(--amber);}
+.summary-falta.ok{color:var(--green);}
+.summary-chip{padding:5px 10px;font-size:12px;gap:6px;background:linear-gradient(180deg,#F3F9FF 0%, #EAF4FF 100%);border:1px solid var(--blue-bdr);color:var(--blue3);box-shadow:var(--shadow-xs);}
+#tBitremSummary tbody td{padding:16px 14px;}
+#tBitremSummary tbody tr td:nth-child(2){min-width:250px;}
+#tBitremSummary tbody tr td:nth-child(7){min-width:220px;}
+
+
+/* ── RESUMO CLIENTE V4 ────────────────────────────────────────── */
+#bitremSummaryCard .card{overflow:visible;}
+#tBitremSummary{border-collapse:separate;border-spacing:0 12px;}
+#tBitremSummary thead th{padding-bottom:10px;}
+#tBitremSummary tbody tr.summary-main td{
+  background:linear-gradient(180deg,#FFFFFF 0%, #FBFDFF 100%);
+  border-top:1px solid #E7EFF6;border-bottom:1px solid #E7EFF6;
+  vertical-align:top;
+}
+#tBitremSummary tbody tr.summary-main:hover td{background:linear-gradient(180deg,#FFFFFF 0%, #F7FBFF 100%);}
+#tBitremSummary tbody tr.summary-detail td{
+  background:transparent !important;
+  border:none !important;
+  padding:0 8px 8px 8px;
+}
+.summary-client-wrap{display:flex;flex-direction:column;gap:10px;}
+.summary-client-top{display:flex;align-items:flex-start;justify-content:flex-start;gap:10px;}
+.summary-client-name{font-size:17px;font-weight:800;letter-spacing:-.02em;color:var(--text);line-height:1.1;}
+.summary-client-kpis{display:flex;flex-wrap:wrap;gap:6px;}
+.summary-mini-pill{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 9px;border-radius:999px;
+  background:#F5FAFE;border:1px solid var(--border);
+  color:var(--text2);font-size:10px;font-weight:800;letter-spacing:.04em;
+  text-transform:uppercase;
+}
+.summary-mini-pill strong{font-size:11px;color:var(--blue3);}
+.summary-desc-box{
+  background:#F8FBFE;border:1px solid #EAF1F7;border-radius:14px;
+  padding:10px 12px;
+}
+.summary-desc-label{font-size:10px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.summary-desc-text{font-size:12px;line-height:1.5;color:var(--text2);font-weight:600;}
+.summary-fila-wrap{display:flex;flex-direction:column;gap:8px;}
+.summary-chip-group{display:flex;flex-wrap:wrap;gap:8px;}
+.summary-order-box{
+  background:#F8FBFE;border:1px solid #EAF1F7;border-radius:14px;padding:9px 10px;
+}
+.summary-order-title{font-size:10px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
+.summary-order-text{font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.5;word-break:break-word;}
+.summary-kpi-stack{display:flex;flex-direction:column;gap:8px;align-items:stretch;}
+.summary-kpi-box{
+  min-width:88px;background:#F8FBFE;border:1px solid #EAF1F7;border-radius:14px;
+  padding:10px 10px 8px;text-align:center;
+}
+.summary-kpi-label{font-size:9px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;}
+.summary-kpi-value{font-family:var(--sans);font-size:22px;font-weight:800;letter-spacing:-.04em;color:var(--text);line-height:1.05;margin-top:4px;}
+.summary-kpi-value.blue{color:var(--blue3);}
+.summary-kpi-value.green{color:var(--green2);}
+.summary-coverage-wrap{display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;}
+.summary-coverage-card{
+  width:100%;background:#F8FBFE;border:1px solid #EAF1F7;border-radius:14px;padding:10px 12px 12px;
+}
+.summary-coverage-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px;}
+.summary-coverage-label{font-size:9px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;}
+.summary-coverage-meta{font-size:11px;font-weight:700;color:var(--text3);}
+.summary-bar{height:7px;margin-top:0;background:#DDEAF4;}
+.summary-gap-box{
+  display:flex;flex-direction:column;gap:8px;
+  background:#FBFDFF;border:1px solid #EAF1F7;border-radius:16px;padding:12px 14px;
+}
+.summary-gap-title{font-size:10px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;}
+.summary-gap-main{font-size:18px;font-weight:800;line-height:1.15;letter-spacing:-.03em;}
+.summary-gap-main.red{color:var(--red);}
+.summary-gap-main.amber{color:var(--amber);}
+.summary-gap-main.green{color:var(--green2);}
+.summary-gap-sub{font-size:12px;line-height:1.5;color:var(--text2);font-weight:700;}
+.summary-plates{font-family:var(--mono);font-size:10px;line-height:1.5;color:var(--text3);word-break:break-word;}
+.summary-detail-shell{
+  margin:0 6px 0 6px;padding:14px;border-radius:18px;
+  background:linear-gradient(180deg,#F9FCFF 0%, #F5FAFE 100%);
+  border:1px solid #E4EEF7;
+}
+.summary-detail-head{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px;
+}
+.summary-detail-title{font-size:11px;font-weight:800;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;}
+.summary-detail-note{font-size:11px;color:var(--text3);font-weight:700;}
+.summary-material-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;
+}
+.summary-material-card{
+  background:#fff;border:1px solid #E7EFF6;border-radius:14px;padding:12px 12px 11px;
+  box-shadow:var(--shadow-xs);
+}
+.summary-material-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
+.summary-material-code{font-family:var(--mono);font-size:11px;font-weight:800;color:var(--blue3);}
+.summary-material-status{
+  padding:4px 8px;border-radius:999px;font-size:10px;font-weight:800;white-space:nowrap;
+}
+.summary-material-status.ok{background:var(--green-bg);color:var(--green2);border:1px solid var(--green-bdr);}
+.summary-material-status.warn{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bdr);}
+.summary-material-status.bad{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bdr);}
+.summary-material-desc{font-size:11px;line-height:1.45;color:var(--text3);min-height:32px;}
+.summary-material-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;}
+.summary-material-metric{
+  background:#F8FBFE;border:1px solid #EAF1F7;border-radius:12px;padding:8px 9px;
+}
+.summary-material-metric-label{font-size:9px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;}
+.summary-material-metric-value{font-size:15px;font-weight:800;letter-spacing:-.03em;color:var(--text);margin-top:4px;}
+.summary-material-metric-value.blue{color:var(--blue3);}
+.summary-material-metric-value.green{color:var(--green2);}
+.summary-material-metric-value.red{color:var(--red);}
+.summary-material-metric-value.amber{color:var(--amber);}
+.summary-material-footer{margin-top:8px;font-size:10px;font-weight:700;color:var(--text3);}
+#tBitremSummary tbody tr.summary-detail{display:none;}
+#tBitremSummary tbody tr.summary-main td:nth-child(1){min-width:250px;}
+#tBitremSummary tbody tr.summary-main td:nth-child(2){min-width:250px;}
+#tBitremSummary tbody tr.summary-main td:nth-child(3),
+#tBitremSummary tbody tr.summary-main td:nth-child(4),
+#tBitremSummary tbody tr.summary-main td:nth-child(5){min-width:120px;}
+#tBitremSummary tbody tr.summary-main td:nth-child(6){min-width:150px;}
+#tBitremSummary tbody tr.summary-main td:nth-child(7){min-width:260px;}
+#tBitremSummary tbody tr.summary-main td:nth-child(8){min-width:140px;}
+@media (max-width:980px){
+  #tBitremSummary thead{display:none;}
+  #tBitremSummary, #tBitremSummary tbody, #tBitremSummary tr, #tBitremSummary td{display:block;width:100%;}
+  #tBitremSummary tbody tr.summary-main td{
+    border-left:1px solid #E7EFF6 !important;border-right:1px solid #E7EFF6 !important;border-radius:0 !important;
+  }
+  #tBitremSummary tbody tr.summary-main td:first-child{border-radius:18px 18px 0 0 !important;}
+  #tBitremSummary tbody tr.summary-main td:last-child{border-radius:0 0 18px 18px !important;}
+  #tBitremSummary tbody tr.summary-detail td{padding:0 0 10px 0;}
+  .summary-kpi-stack,.summary-coverage-wrap{align-items:stretch;}
+  .summary-kpi-box,.summary-coverage-card{min-width:auto;text-align:left;}
+}
+
 </style>
 </head>
 <body>
@@ -1101,9 +1257,46 @@ tr:hover td{background:#F9FCFF;}
     <div class="table-wrap">
       <table id="tPainel">
         <thead><tr>
-          <th>Cavalo</th><th>Cliente</th><th>Tipo</th><th>Material</th><th>Descrição</th><th>Qtd Est.</th><th>Saldo MB52</th><th>Status</th><th>Ação</th>
+          <th>CAVALO</th><th>TRANSP.</th><th>CLIENTE</th><th>SKU</th><th>DESCRIÇÃO</th><th>QTD VEÍCULO</th><th>QTD PEDIDO</th><th>SALDO MB52</th><th>AÇÃO</th>
         </tr></thead>
         <tbody id="bPainel"></tbody>
+      </table>
+    </div>
+  </div>
+
+<!-- ══════════════════ RESUMO BITREM POR CLIENTE ══════════════════ -->
+<div id="bitremSummaryCard" style="display:none; margin-top:0">
+  <div class="card">
+    <div class="card-pad" style="padding:18px 22px 12px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px 14px">
+        <div>
+          <div class="card-title" style="display:flex;align-items:center;gap:8px">
+            <span style="font-size:18px">🚛</span> Resumo de Veículos por Cliente
+          </div>
+          <div class="card-sub" style="margin-top:4px">Visão consolidada da fila no GK comparando pedido aberto na ZTSD e saldo livre 0700 na MB52.</div>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap" id="bitremLegend">
+          <span style="font-size:11px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bdr);padding:4px 10px;border-radius:20px;font-weight:700">✅ Coberto</span>
+          <span style="font-size:11px;background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bdr);padding:4px 10px;border-radius:20px;font-weight:700">⚠️ Parcial</span>
+          <span style="font-size:11px;background:var(--red-bg);color:var(--red);border:1px solid var(--red-bdr);padding:4px 10px;border-radius:20px;font-weight:700">❌ Sem Estoque</span>
+          <span style="font-size:11px;background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bdr);padding:4px 10px;border-radius:20px;font-weight:700">🟣 Ajuste de Pedidos</span>
+          <span style="font-size:11px;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bdr);padding:4px 10px;border-radius:20px;font-weight:700">🔵 Sem Pedido</span>
+        </div>
+      </div>
+    </div>
+    <div class="table-wrap" style="padding-top:0">
+      <table id="tBitremSummary">
+        <thead><tr>
+          <th style="min-width:170px">CLIENTE<br><span style="font-size:10px;font-weight:500;opacity:.7">descrição consolidada</span></th>
+          <th style="min-width:250px">COMPOSIÇÃO DA FILA<br><span style="font-size:10px;font-weight:500;opacity:.7">somente wait</span></th>
+          <th style="text-align:right;min-width:90px">PALLETS GK<br><span style="font-size:10px;font-weight:500;opacity:.7">em espera</span></th>
+          <th style="text-align:right;min-width:95px">PALLETS ZTSD<br><span style="font-size:10px;font-weight:500;opacity:.7">pedido aberto</span></th>
+          <th style="text-align:right;min-width:95px">SALDO MB52<br><span style="font-size:10px;font-weight:500;opacity:.7">em pallets</span></th>
+          <th style="text-align:center;min-width:110px">COBERTURA<br><span style="font-size:10px;font-weight:500;opacity:.7">atendimento</span></th>
+          <th style="min-width:220px">FALTA PARA CARREGAR<br><span style="font-size:10px;font-weight:500;opacity:.7">gargalo principal</span></th>
+          <th style="text-align:center;min-width:130px">STATUS</th>
+        </tr></thead>
+        <tbody id="bBitremSummary"></tbody>
       </table>
     </div>
   </div>
@@ -1341,32 +1534,11 @@ tr:hover td{background:#F9FCFF;}
           style="width:100%;padding:11px 14px;border:1.5px solid #E2E8F5;border-radius:10px;font-size:14px;font-weight:700;color:#7C3AED;font-family:monospace;outline:none">
       </div>
 
-      <!-- Separador SAP -->
-      <div style="border-top:1px dashed #E2E8F5;margin:14px 0 14px"></div>
-      <div style="font-size:10px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px">🖥️ Dados SAP — para gerar VBS</div>
-
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-        <div>
-          <label style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.6px;display:block;margin-bottom:6px">Material SAP da Lata</label>
-          <input id="envio-mat-sap" placeholder="Ex: CAABORR-20-085B20"
-            style="width:100%;padding:9px 12px;border:1.5px solid #E2E8F5;border-radius:10px;font-size:12px;font-weight:700;color:#059669;font-family:monospace;outline:none">
-        </div>
-        <div>
-          <label style="font-size:11px;font-weight:700;color:#6B7280;text-transform:uppercase;letter-spacing:0.6px;display:block;margin-bottom:6px">Lote</label>
-          <input id="envio-lote" value="N000000000"
-            style="width:100%;padding:9px 12px;border:1.5px solid #E2E8F5;border-radius:10px;font-size:12px;font-weight:700;color:#374151;font-family:monospace;outline:none">
-        </div>
-      </div>
-
       <!-- Botões -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="display:grid;grid-template-columns:1fr;gap:10px">
         <button onclick="enviarParaOperador()"
           style="padding:13px;background:#1C5EF5;color:white;border:none;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:var(--sans)">
           &#128230; Enviar Operador
-        </button>
-        <button onclick="gerarVBS()"
-          style="padding:13px;background:#059669;color:white;border:none;border-radius:12px;font-size:13px;font-weight:800;cursor:pointer;font-family:var(--sans)">
-          ⬇ Gerar VBS SAP
         </button>
       </div>
     </div>
@@ -1702,6 +1874,20 @@ function loadFile(tipo, inp) {
 const tL=d=>{const s=String(d);return s.includes('473')?{t:'473ml',lpp:6224}:s.includes('350')?{t:'350ml',lpp:8169}:s.includes('269')?{t:'269ml',lpp:11088}:{t:'?',lpp:0};};
 const pallets=v=>{const s=String(v);return s.includes('41')?41:s.includes('40')?40:s.includes('32')?32:s.includes('25')?25:s.includes('24')?24:0;};
 const fN=n=>Number(n).toLocaleString('pt-BR');
+const fMil=n=>((Number(n)||0)/1000).toLocaleString('pt-BR',{minimumFractionDigits:3,maximumFractionDigits:3});
+function acaoPainel(row){
+  const pedido = Number(row?.saldoZ || 0) * 1000;
+  const saldo  = Number(row?.saldoRest!==undefined ? row.saldoRest : (row?.saldoLatas||0))||0;
+  const necessidade = Number(row?.qtdEst||0)||0;
+
+  if(necessidade <= 0) return {txt:'Aguardando', cls:'blue'};
+  if(pedido <= 0) return {txt:'Ajuste de pedido', cls:'purple'};
+  if(saldo <= 0) return {txt:'Sem saldo', cls:'red'};
+  if(pedido >= necessidade && saldo >= necessidade) return {txt:'Pode carregar', cls:'green'};
+  if(saldo < necessidade && saldo < pedido) return {txt:'Sem saldo', cls:'red'};
+  if(pedido < necessidade && pedido <= saldo) return {txt:'Ajuste de pedido', cls:'purple'};
+  return {txt:'Parcial', cls:'amber'};
+}
 const calcTMA=ch=>{
   if(!ch)return{s:'—',m:0};
   const d=typeof ch==='number'?new Date((ch-25569)*86400000):new Date(ch);
@@ -1716,11 +1902,13 @@ function analisar(){
   const limpa = s => String(s||'').replace(/[\xa0\u200b\u00a0]/g,'').trim();
   const norm  = s => limpa(s).toUpperCase();
 
-  // ── MB52: saldo total por material (em MI) ──
+  // ── MB52: saldo total por material (Depósito 0700 · Utilização livre · em MI) ──
   const mb52m = {};
   (S.mb52||[]).forEach(r => {
+    const dep = limpa(r['Depósito'] || r['Deposito'] || r['Depósito MRP'] || r['Deposito MRP'] || '');
+    if(dep && dep !== '0700') return;
     const mat = limpa(r['Material']);
-    const sv  = parseFloat(r['Utilização livre'] || r['Utilizacao livre'] || 0);
+    const sv  = parseFloat(r['Utilização livre'] || r['Utilizacao livre'] || 0) || 0;
     if(mat) mb52m[mat] = (mb52m[mat]||0) + sv;
   });
 
@@ -1837,12 +2025,12 @@ function analisar(){
       pedFila[p.mat].push(p);
     });
     let pedIdx = {}; // índice atual por material
+    const bitremRows = [];
 
     // Uma linha por veículo — saldo vai sendo descontado em sequência
     veics.forEach(v => {
       const pVeic = pallets(v['Veículo']||v['Veiculo']||'');
       // Pedido principal = maior saldo ainda disponível
-      // Pegar próximo pedido disponível (maior saldo MB52 ainda disponível)
       const matsDisp = Object.entries(saldoDisp)
         .filter(([m,s]) => s > 0 && pedFila[m] && (pedIdx[m]||0) < pedFila[m].length)
         .sort((a,b) => b[1]-a[1]);
@@ -1851,19 +2039,18 @@ function analisar(){
       const mat = matsDisp[0][0];
       const ped = pedFila[mat][pedIdx[mat]||0];
       if(!ped) return;
-      // Avançar índice para próximo veículo do mesmo material
       pedIdx[mat] = (pedIdx[mat]||0) + 1;
 
       const qtdEst = pVeic * ped.lpp;
       const disp   = saldoDisp[mat] || 0;
 
       let status;
-      if(qtdEst === 0)     status = '🔵 Aguardando';
-      else if(disp <= 0)   status = '❌ Sem Estoque';
-      else if(disp >= qtdEst) status = '✅ Carregar';
-      else                 status = '⚠️ Parcial';
+      if(qtdEst === 0)          status = '🔵 Aguardando';
+      else if(disp <= 0)        status = '❌ Sem Estoque';
+      else if(disp >= qtdEst)   status = '✅ Carregar';
+      else                      status = '⚠️ Parcial';
 
-      S.painel.push({
+      const row = {
         cavalo:    limpa(v['Cavalo']),
         bau:       limpa(v['Baú 1']||v['Bau 1']||''),
         motorista: limpa(v['Motorista']),
@@ -1880,11 +2067,35 @@ function analisar(){
         saldoLatas: ped.saldoLatas,
         saldoRest:  Math.round(disp),
         status
-      });
+      };
+      S.painel.push(row);
+      if(pVeic >= 40) bitremRows.push(row);
 
       // Descontar saldo para o próximo veículo
       saldoDisp[mat] = Math.max(0, disp - qtdEst);
     });
+
+    // Ajuste especial para bitrens (40/41): decisão consolidada por cliente
+    if(bitremRows.length){
+      const pedidoTotalCliente = peds.reduce((acc,p) => acc + ((Number(p.saldoZ)||0) * 1000), 0);
+      const matsCliente = [...new Set(peds.map(p => p.mat).filter(Boolean))];
+      const saldoTotalCliente = matsCliente.reduce((acc,mat) => acc + (Number(mb52m[mat]||0) * 1000), 0);
+      const necessidadeBitrem = bitremRows.reduce((acc,row) => acc + (Number(row.qtdEst)||0), 0);
+      const cobertura = Math.min(pedidoTotalCliente, saldoTotalCliente);
+
+      let statusBitrem = '🔵 Aguardando';
+      if(pedidoTotalCliente <= 0)       statusBitrem = '🔵 Sem pedido';
+      else if(saldoTotalCliente <= 0)   statusBitrem = '❌ Sem Estoque';
+      else if(cobertura >= necessidadeBitrem) statusBitrem = '✅ Carregar';
+      else                               statusBitrem = '⚠️ Parcial';
+
+      let saldoClienteRest = saldoTotalCliente;
+      bitremRows.forEach(row => {
+        row.status = statusBitrem;
+        row.saldoRest = Math.max(0, Math.round(saldoClienteRest));
+        saldoClienteRest = Math.max(0, saldoClienteRest - (Number(row.qtdEst)||0));
+      });
+    }
 
     // OVs que sobraram sem veículo (mais pedidos que veículos disponíveis)
     Object.entries(pedFila).forEach(([mat, ovs]) => {
@@ -1944,36 +2155,398 @@ function analisar(){
   S.hist=[];
 }
 
+// ── TESTE: AÇÃO CONSOLIDADA POR CLIENTE (mantém layout atual) ─────────────────
+function recalcularAcaoPorCliente(){
+  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
+  const norm  = s => limpa(s).toUpperCase();
+  const resumo = {};
+  const mb52PorMat = {};
+
+  (S.mb52||[]).forEach(r=>{
+    const dep = limpa(r['Depósito'] || r['Deposito'] || r['Depósito MRP'] || r['Deposito MRP'] || '');
+    if(dep && dep !== '0700') return;
+    const mat = limpa(r['Material']);
+    const livre = parseFloat(r['Utilização livre'] || r['Utilizacao livre'] || 0) || 0;
+    if(mat) mb52PorMat[mat] = (mb52PorMat[mat]||0) + (livre * 1000);
+  });
+
+  (S.painel||[]).forEach(r=>{
+    const cli = norm(r.cliente||'');
+    if(!cli) return;
+    if(!resumo[cli]) resumo[cli] = {necessidade:0, pedido:0, saldo:0, mats:{}};
+    if((r.cavalo||'—') !== '—') resumo[cli].necessidade += Number(r.qtdEst||0);
+  });
+
+  (S.ztsd||[]).forEach(r=>{
+    const cli = norm(r['Nome Alfa'] || '');
+    if(!cli || !resumo[cli]) return;
+
+    const inc = limpa(r['Incoterms'] || '').toUpperCase();
+    const pedido = inc === 'CIF'
+      ? (parseFloat(r['Qtd Rem. Proc'] || r['Qtd Rem Proc'] || 0) || 0)
+      : (parseFloat(r['Saldo'] || 0) || 0);
+
+    // ZTSD vem em MI; convertemos para quantidade para comparar com qtdEst e MB52
+    if(pedido > 0) resumo[cli].pedido += (pedido * 1000);
+
+    const mat = limpa(r['Material'] || '');
+    if(mat && !resumo[cli].mats[mat]){
+      resumo[cli].mats[mat] = true;
+      resumo[cli].saldo += Number(mb52PorMat[mat] || 0);
+    }
+  });
+
+  (S.painel||[]).forEach(r=>{
+    const cli = norm(r.cliente||'');
+    const base = resumo[cli];
+
+    if(!base){
+      r.acaoTeste = {txt:'Aguardando', cls:'blue'};
+      return;
+    }
+
+    if((r.cavalo||'—') === '—'){
+      r.acaoTeste = {txt:'Aguardando veículo', cls:'blue'};
+      return;
+    }
+
+    if(base.necessidade <= 0){
+      r.acaoTeste = {txt:'Aguardando', cls:'blue'};
+      return;
+    }
+
+    if(base.pedido <= 0){
+      r.acaoTeste = {txt:'Ajuste de pedido', cls:'purple'};
+      return;
+    }
+
+    if(base.saldo <= 0){
+      r.acaoTeste = {txt:'Sem saldo', cls:'red'};
+      return;
+    }
+
+    if(base.pedido >= base.necessidade && base.saldo >= base.necessidade){
+      r.acaoTeste = {txt:'Pode carregar', cls:'green'};
+      return;
+    }
+
+    if(base.saldo < base.necessidade && base.saldo < base.pedido){
+      r.acaoTeste = {txt:'Sem saldo', cls:'red'};
+      return;
+    }
+
+    if(base.pedido < base.necessidade && base.pedido <= base.saldo){
+      r.acaoTeste = {txt:'Ajuste de pedido', cls:'purple'};
+      return;
+    }
+
+    r.acaoTeste = {txt:'Parcial', cls:'amber'};
+  });
+}
+
 // ── RENDER PAINEL ─────────────────────────────────────────────────────────────
 function renderPainel(){
-  document.getElementById('statsWrap').style.display='block';
-  document.getElementById('painelCard').style.display='block';
+  const statsWrap = document.getElementById('statsWrap');
+  const painelCard = document.getElementById('painelCard');
+  if(statsWrap) statsWrap.style.display='none';
+  if(painelCard) painelCard.style.display='none';
   S._btnCache = [];
-  const tb=document.getElementById('bPainel');tb.innerHTML='';
-  S.painel.forEach(r=>{
-    const bc=r.status.includes('✅')?'green':r.status.includes('⚠️')?'yellow':r.status.includes('❌')?'red':'blue';
-    const tr=document.createElement('tr');
-    const descCurta = (r.desc||'—').length > 40 ? (r.desc||'—').substring(0,40)+'…' : (r.desc||'—');
-    const podeEnviar = r.status && r.status.includes('✅');
-    const idxBtn = S._btnCache.length;
-    if(podeEnviar) S._btnCache.push({
-      cavalo:r.cavalo, cliente:r.cliente, veiculo:r.veiculo||'',
-      material:r.material||'', desc:r.desc||'', qtd:r.qtdEst||0
+  recalcularAcaoPorCliente();
+  renderBitremSummary();
+}
+
+// ── RESUMO DE VEÍCULOS POR CLIENTE ────────────────────────────────────────────
+
+function renderBitremSummary(){
+  const card = document.getElementById('bitremSummaryCard');
+  const tb   = document.getElementById('bBitremSummary');
+  if(!card || !tb) return;
+
+  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
+  const norm  = s => limpa(s).toUpperCase();
+
+  const TIPO_PAL = {
+    'Bitrem (40 Pallets)':   40,
+    'Bitrem (41 Pallets)':   41,
+    'Bau (25 Pallets)':      25,
+    'Sider (25 Pallets)':    25,
+    'Sider LT (24 Pallets)': 24,
+  };
+  const TIPO_LABEL = {
+    'Bitrem (40 Pallets)':   'Bitrem (40)',
+    'Bitrem (41 Pallets)':   'Bitrem (41)',
+    'Bau (25 Pallets)':      'Baú (25)',
+    'Sider (25 Pallets)':    'Sider (25)',
+    'Sider LT (24 Pallets)': 'Sider (24)',
+  };
+  const TIPO_ORDER = [
+    'Bitrem (40 Pallets)','Bitrem (41 Pallets)',
+    'Bau (25 Pallets)','Sider (25 Pallets)','Sider LT (24 Pallets)'
+  ];
+
+  const lppDe = desc => {
+    const s = String(desc||'');
+    if(s.includes('473')) return 6224;
+    if(s.includes('350')) return 8169;
+    if(s.includes('269')) return 11088;
+    return 0;
+  };
+
+  const mb52Latas = {};
+  (S.mb52||[]).forEach(r => {
+    const dep = limpa(r['Depósito']||r['Deposito']||'');
+    if(dep && dep !== '0700') return;
+    const mat = limpa(r['Material']);
+    const mi  = parseFloat(r['Utilização livre']||r['Utilizacao livre']||0)||0;
+    if(mat) mb52Latas[mat] = (mb52Latas[mat]||0) + (mi * 1000);
+  });
+
+  const ztsdPorCli = {};
+  (S.ztsd||[]).forEach(r => {
+    const cli  = norm(r['Nome Alfa']||'');
+    const mat  = limpa(r['Material']||'');
+    const desc = String(r['Descrição Material']||r['Descricao Material']||'');
+    const inc  = limpa(r['Incoterms']||'').toUpperCase();
+    const saldo = inc === 'CIF'
+      ? (parseFloat(r['Qtd Rem. Proc']||r['Qtd Rem Proc']||0)||0)
+      : (parseFloat(r['Saldo']||0)||0);
+    if(!cli || !mat || saldo <= 0) return;
+    const lpp  = lppDe(desc);
+    const pals = lpp > 0 ? Math.round(saldo * 1000 / lpp * 10) / 10 : 0;
+    if(!ztsdPorCli[cli]) ztsdPorCli[cli] = { palletsTotal: 0, mats: {} };
+    if(!ztsdPorCli[cli].mats[mat]) ztsdPorCli[cli].mats[mat] = { lpp, latas: 0, desc };
+    ztsdPorCli[cli].mats[mat].latas += saldo * 1000;
+    ztsdPorCli[cli].palletsTotal    += pals;
+  });
+
+  const mb52PorCli = {};
+  Object.entries(ztsdPorCli).forEach(([cli, info]) => {
+    const total = Object.entries(info.mats).reduce((acc,[mat,md]) => {
+      const latas = mb52Latas[mat] || 0;
+      return acc + (md.lpp > 0 ? Math.round(latas / md.lpp * 10) / 10 : 0);
+    }, 0);
+    mb52PorCli[cli] = Math.round(total * 10) / 10;
+  });
+
+  const gkVeics  = {};
+  const gkListas = {};
+
+  const parseDt = s => {
+    if(!s) return Infinity;
+    const m = String(s).match(/(\d{2})\/(\d{2})\/(\d{4})\s+(\d{2}):(\d{2})/);
+    if(!m) return Infinity;
+    return new Date(m[3], m[2]-1, m[1], m[4], m[5]).getTime();
+  };
+
+  (S.gk||[]).forEach(v => {
+    const st = String(v['Status GK']||'').toLowerCase();
+    if(st !== 'wait') return;
+    const vt = String(v['Veículo']||v['Veiculo']||'');
+    if(!TIPO_PAL[vt]) return;
+    const cli = norm(v['Cliente']||'');
+    if(!cli || cli === 'NAN' || cli.length < 2) return;
+    const marker = v['Data Cadastro'] || v['date_marker'] || null;
+    const cavalo = limpa(v['Cavalo']||'');
+    if(!gkVeics[cli])  gkVeics[cli]  = {};
+    if(!gkListas[cli]) gkListas[cli] = [];
+    gkVeics[cli][vt] = (gkVeics[cli][vt]||0) + 1;
+    gkListas[cli].push({ pal: TIPO_PAL[vt], marker, cavalo });
+  });
+
+  Object.values(gkListas).forEach(arr =>
+    arr.sort((a,b) => parseDt(a.marker) - parseDt(b.marker))
+  );
+
+  const todos = new Set([...Object.keys(gkVeics),...Object.keys(ztsdPorCli)]);
+  if(!todos.size){ card.style.display='none'; return; }
+  card.style.display = 'block';
+  tb.innerHTML = '';
+
+  const fP = n => n > 0
+    ? Number(n).toLocaleString('pt-BR',{minimumFractionDigits:0,maximumFractionDigits:1})
+    : '—';
+
+  const palTotal = veics => Object.entries(veics||{})
+    .reduce((acc,[vt,cnt]) => acc + cnt*(TIPO_PAL[vt]||0), 0);
+
+  const composicao = veics => {
+    const parts = TIPO_ORDER.filter(vt => (veics||{})[vt] > 0)
+      .map(vt => `<span class="summary-chip">🚛 ${veics[vt]} ${TIPO_LABEL[vt]}</span>`);
+    return parts.length ? parts.join(' ') : '<span style="color:var(--text3);font-size:12px">—</span>';
+  };
+
+  const sorted = [...todos].sort((a,b) => {
+    const pa = palTotal(gkVeics[a]||{}), pb = palTotal(gkVeics[b]||{});
+    if(pa !== pb) return pb - pa;
+    return a.localeCompare(b);
+  });
+
+  const calcExcedente = (lista, pZTSD) => {
+    let saldo = pZTSD, atend = 0, excVeics = 0, excPal = 0;
+    const atendidos = [], excedentes = [];
+    lista.forEach(item => {
+      if(saldo >= item.pal){ atend++; saldo -= item.pal; atendidos.push(item); }
+      else                  { excVeics++; excPal += item.pal; excedentes.push(item); }
     });
-    const btnCell = podeEnviar
-      ? '<button onclick="abrirEnvio('+idxBtn+')" style="padding:5px 10px;background:#1C5EF5;color:#fff;border:none;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;">📤 Enviar</button>'
-      : '—';
-    tr.innerHTML=`<td class="mono" style="font-weight:700">${r.cavalo}</td>
-      <td style="font-size:11px;color:var(--text2)">${r.transp||'—'}</td>
-      <td style="font-weight:600">${r.cliente}</td>
-      <td style="font-size:13px">${r.tipo||r.tipoLata||'—'}</td>
-      <td class="mono" style="font-size:12px;color:var(--text2)">${r.material||'—'}</td>
-      <td style="font-size:12px;color:var(--text2);max-width:260px">${descCurta}</td>
-      <td class="mono">${r.qtdEst>0?fN(r.qtdEst):(r.qtd>0?fN(r.qtd):'—')}</td>
-      <td class="mono">${fN(r.saldoRest!==undefined?r.saldoRest:(r.saldoL||0))}</td>
-      <td><span class="badge ${bc}">${r.status}</span></td>
-      <td>${btnCell}</td>`;
-    tb.appendChild(tr);
+    return { atend, excVeics, excPal, atendidos, excedentes };
+  };
+
+  sorted.forEach((cli, idx) => {
+    const veics    = gkVeics[cli]  || {};
+    const lista    = gkListas[cli] || [];
+    const pGK      = palTotal(veics);
+    const totalV   = lista.length;
+    const pZTSD    = Math.round((ztsdPorCli[cli]?.palletsTotal||0) * 10) / 10;
+    const pMB52    = mb52PorCli[cli] || 0;
+    const matsInfo = ztsdPorCli[cli] ? Object.entries(ztsdPorCli[cli].mats) : [];
+
+    const descricoes = [...new Set(matsInfo.map(([,m]) => limpa(m.desc||'')).filter(Boolean))]
+      .slice(0,3)
+      .join(' • ');
+
+    const { atend, excVeics, excPal, atendidos, excedentes } = calcExcedente(lista, pZTSD);
+
+    const cobertura = Math.min(pZTSD, pMB52);
+    const cobPct = pGK > 0 ? Math.min(100, Math.round((cobertura / pGK) * 100)) : 0;
+    const barColor = cobPct >= 100 ? 'var(--green)' : cobPct >= 50 ? 'var(--amber)' : 'var(--red)';
+    const barHtml = pGK > 0
+      ? `<div class="summary-bar"><span style="width:${cobPct}%;background:${barColor}"></span></div>`
+      : '';
+
+    const placasAtend = atendidos.map(i=>i.cavalo).filter(Boolean).join(' · ');
+    const placasExc   = excedentes.map(i=>i.cavalo).filter(Boolean).join(' · ');
+
+    const faltaPal = pGK > 0 ? Math.max(0, Math.round((pGK - cobertura) * 10) / 10) : 0;
+    let badgeCls = 'green', badgeTxt = '✅ Carregar';
+    let faltaMain = 'Cobertura completa';
+    let faltaClass = 'green';
+    let faltaSub = totalV > 0
+      ? `${atend}/${totalV} veículos atendidos na fila`
+      : 'Sem veículos aguardando';
+    let detalheExtra = '';
+    let motivo = 'Fluxo atendido';
+
+    if (pGK > 0 && pZTSD <= 0) {
+      faltaMain = `Falta ${fP(pGK)} pallets de pedido`;
+      faltaClass = 'amber';
+      faltaSub = 'Não há pedido aberto suficiente na ZTSD para cobrir a fila';
+      motivo = 'Ajuste de pedido';
+      badgeCls = 'purple'; badgeTxt = 'Ajuste de pedido';
+    } else if (pGK > 0 && pMB52 <= 0) {
+      faltaMain = `Falta ${fP(pGK)} pallets de estoque`;
+      faltaClass = 'red';
+      faltaSub = 'Sem saldo livre 0700 na MB52 para atender a fila';
+      motivo = 'Sem saldo';
+      badgeCls = 'red'; badgeTxt = 'Sem saldo';
+    } else if (faltaPal > 0) {
+      if (pMB52 < pZTSD) {
+        faltaMain = `Falta ${fP(faltaPal)} pallets de estoque`;
+        faltaClass = 'red';
+        faltaSub = 'O saldo MB52 é o gargalo principal deste cliente';
+        motivo = 'Sem saldo';
+        badgeCls = 'red'; badgeTxt = 'Sem saldo';
+      } else {
+        faltaMain = `Falta ${fP(faltaPal)} pallets de pedido`;
+        faltaClass = 'amber';
+        faltaSub = 'O pedido ZTSD é o gargalo principal deste cliente';
+        motivo = 'Ajuste de pedido';
+        badgeCls = 'purple'; badgeTxt = 'Ajuste de pedido';
+      }
+    } else if (pGK <= 0 && pZTSD > 0) {
+      faltaMain = 'Sem veículos em espera';
+      faltaClass = 'green';
+      faltaSub = 'Cliente com pedido aberto, mas sem fila no GK';
+      motivo = 'Sem fila';
+      badgeCls = 'blue'; badgeTxt = 'Sem fila';
+    }
+
+    if(excVeics > 0){
+      detalheExtra += `<div class="summary-gap-sub" style="color:var(--red)">Excedente na fila: ${excVeics} veículo${excVeics>1?'s':''} · ${fP(excPal)} pallets</div>`;
+    }
+
+    if(placasAtend){
+      detalheExtra += `<div class="summary-plates"><strong style="color:var(--green2)">Atendidos:</strong> ${placasAtend}</div>`;
+    }
+    if(placasExc){
+      detalheExtra += `<div class="summary-plates"><strong style="color:var(--red)">Excedentes:</strong> ${placasExc}</div>`;
+    }
+
+    const trMain  = document.createElement('tr');
+    trMain.className = 'summary-main';
+    trMain.innerHTML = `
+      <td>
+        <div class="summary-client-wrap">
+          <div class="summary-client-top">
+            <div class="summary-client-name">${cli}</div>
+          </div>
+          <div class="summary-client-kpis">
+            <span class="summary-mini-pill">Veículos <strong>${fmtN(totalV)}</strong></span>
+            <span class="summary-mini-pill">Materiais <strong>${fmtN(matsInfo.length)}</strong></span>
+            <span class="summary-mini-pill">Status <strong>${badgeTxt}</strong></span>
+          </div>
+          <div class="summary-desc-box">
+            <div class="summary-desc-label">Descrição consolidada</div>
+            <div class="summary-desc-text">${descricoes || 'Sem descrição consolidada para este cliente.'}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="summary-fila-wrap">
+          <div class="summary-chip-group">${composicao(veics)}</div>
+          <div class="summary-order-box">
+            <div class="summary-order-title">Leitura da fila</div>
+            <div class="summary-order-text">${totalV>0 ? `${fmtN(totalV)} veículo(s) em wait no GK.` : 'Nenhum veículo em wait para este cliente.'}${excVeics>0 ? ` Excedente atual: ${fmtN(excVeics)} veículo(s).` : ''}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="summary-kpi-stack">
+          <div class="summary-kpi-box">
+            <div class="summary-kpi-label">GK em espera</div>
+            <div class="summary-kpi-value">${pGK>0?fP(pGK):'—'}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="summary-kpi-stack">
+          <div class="summary-kpi-box">
+            <div class="summary-kpi-label">ZTSD aberto</div>
+            <div class="summary-kpi-value blue">${pZTSD>0?fP(pZTSD):'—'}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="summary-kpi-stack">
+          <div class="summary-kpi-box">
+            <div class="summary-kpi-label">MB52 livre</div>
+            <div class="summary-kpi-value ${pMB52>0?'green':'red'}">${pMB52>0?fP(pMB52):'0'}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="summary-coverage-wrap">
+          <div class="summary-coverage-card">
+            <div class="summary-coverage-top">
+              <span class="summary-coverage-label">Cobertura</span>
+              <span class="summary-pct">${pGK>0?cobPct+'%':'—'}</span>
+            </div>
+            ${barHtml}
+            <div class="summary-coverage-meta" style="margin-top:8px">${pGK>0?`${fP(cobertura)} pal cobertos`: 'Sem fila aguardando'}</div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <div class="summary-gap-box">
+          <div class="summary-gap-title">Gargalo principal</div>
+          <div class="summary-gap-main ${faltaClass}">${faltaMain}</div>
+          <div class="summary-gap-sub">${faltaSub}</div>
+          ${detalheExtra}
+        </div>
+      </td>
+      <td style="text-align:center">
+        <span class="badge ${badgeCls} summary-status">${badgeTxt}</span>
+      </td>`;
+    tb.appendChild(trMain);
   });
 }
 
@@ -2280,12 +2853,6 @@ function renderDocas() {
           ${lsProd ? `<div style="font-size:11px;color:#1C5EF5;margin-top:4px;font-weight:600;line-height:1.3">${lsProd}</div>` : ''}
           ${lsEndereco ? `<div style="font-size:10px;color:#7C3AED;margin-top:3px;font-weight:600">&#128205; ${lsEndereco}</div>` : ''}
           ${lsPallets ? `<div style="font-size:10px;color:var(--text3);margin-top:2px">${lsPallets} pallets</div>` : ''}
-          <div style="margin-top:8px">
-            <input id="doca-mat-${i}" placeholder="Material SAP da lata..."
-              value="${localStorage.getItem('doca-mat-sap-'+i)||''}"
-              oninput="localStorage.setItem('doca-mat-sap-${i}',this.value)"
-              style="width:100%;padding:4px 8px;font-size:10px;border:1px solid var(--border2);border-radius:6px;background:var(--bg);color:#059669;font-family:monospace;outline:none">
-          </div>
           <div style="display:flex;gap:4px;margin-top:6px">
             ${tmaDoca ? `<span style="font-size:10px;color:${tmaAlert?'var(--red)':'var(--green)'};font-weight:700;align-self:center;margin-right:auto">${tmaDoca}</span>` : `<span style="font-size:10px;color:var(--green);align-self:center;margin-right:auto">${espExib||'Em carga'}</span>`}
             <button onclick="liberarDoca(${i})" style="font-size:9px;padding:3px 8px;background:var(--green-bg);border:1px solid var(--green-bdr);color:var(--green);border-radius:5px;cursor:pointer;font-weight:700">✓ Liberar</button>
@@ -2906,329 +3473,16 @@ setInterval(function(){
 
 <script>
 // ── MAPAS SAP ─────────────────────────────────────────────────────────────────
-const TRANSP_MAP = {
-  'AQUIRAZ':'91135','AGUIA BRANCA':'91481','ALLI':'90861','BALL LOG':'40012',
-  'BEE LOGISTICA':'91674','BEELOGISTICA':'91674','CABRAL TRANSP':'91486',
-  'CARGO X':'91713','CKL':'91640','CLIC':'91201','COIOTE':'90901',
-  'COMANDO DIESEL':'92401','CONCORDE':'91602','COOPERLATAS':'91869',
-  'CTS-COOPERATIVA':'91595','DELLMAR':'91715','DSR':'90610','FADEL':'91855',
-  'GALOTE':'92115','GO TRANSP':'91711','GRANELEIRO':'90786','IMEDIATO':'90273',
-  'INFINITY':'91290','INTERLOG':'76276','INTERVIA':'91443','J10':'91938',
-  'JBG':'92204','JOLIVAN':'91609','JSL':'90790','KAISEM':'92060','KMC':'90596',
-  'LOG IN':'40990','LOGHIS':'91104','LOGIFLAM':'91487','LOGITRANS':'90971',
-  'LOGNET':'91529','LTA':'91196','MACROPO':'91021','META CARGO':'91479',
-  'META TRUCK':'90523','MG LOGISTICA':'91693','MTR CARGO':'91710',
-  'MULTI PARK':'91228','NOVA BELEM':'91492','OTD':'90537','PETONY':'91883',
-  'PIVATO':'91313','POLONI':'91670','RADAR':'91736','REVERSELOG':'91632',
-  'RODA BRASIL':'92274','RODALOG':'91476','RODODANTAS':'91326','RODOLEVE':'91100',
-  'SALVADOR':'91329','SANTO FORTE':'91385','SMARTLOG':'91484','STHEF':'91333',
-  'SUPERIOR':'91811','SUPRICEL':'91215','TCGOES':'91202','TDR':'91671',
-  'TG LOGISTICA':'91719','TORA':'91615','TRANCENACH':'91053','TRANSCENACHI':'91053',
-  'TRANSBUANI':'91178','TRANSBUENO':'91545','TRANSGIRES':'90262',
-  'TRANSGRECCO':'91565','TRANSILVA':'91981','TRANSIT':'91058','TRANSLECH':'91041',
-  'TRANSPIA':'91510','TRANSZAPE':'91310','VIRC':'91741','VRIELINK':'92280',
-  'WINSTON':'92121','YNOVA':'91596','YROS':'91301','CARGOX':'91713',
-  'CARGOX':'91713','RODALOG':'91476','RODA BRASIL':'92274',
-};
 
-const CLI_MAP = {
-  'AB AGUDOS':'20492','AB CEBRASA':'20480','AB AQUIRAZ':'20494','AB BELEM':'20477',
-  'AB BRASILI':'20478','AB MACACU':'20731','AB CAMACAR':'20479','AB CUIABA':'20481',
-  'AB GUARULH':'21064','AB JACAREÍ':'20482','AB JAGUARI':'20483','AB J PESSO':'20487',
-  'AB JUATUBA':'20484','AB JUNDIAI':'20491','AB LAGES':'20489','AB MANAUS':'20266',
-  'AB MOGI':'20507','AB N RIO':'20486','AB N MINAS':'20485','AB PIRAI':'20506',
-  'AB PONTA G':'20561','AB SERGIPE':'20476','AB TERESIN':'20490','AB UBERLAN':'20560',
-  'AB VIAMÃO':'20475','CC DUQUE D':'22306','CC JPA - R':'20077','CC ITABIRI':'20510',
-  'BRJC - BALL JACAREI':'40012','INAB':'20519','NOVELIS':'30052','MONSTER BR':'20545',
-  'OU NEW AGE':'20486','NEW AGE':'20486','NSA TRES R':'20561','AB COLORAD':'20494',
-  'AB JUNDIAI':'20491','AB LAGES':'20489','AB N RIO':'20486',
-};
 
-const TIPO_VBS_MAP = {
-  'Bau (25 Pallets)':'z9','Sider (25 Pallets)':'z4','Sider LT (24 Pallets)':'ze',
-  'Bitrem (40 Pallets)':'s3','Bitrem (41 Pallets)':'s6',
-  'Z9':'z9','Z4':'z4','ZE':'ze','S3':'s3','S6':'s6',
-};
 
-const PALLETS_MAP = {
-  'Bau (25 Pallets)':25,'Sider (25 Pallets)':25,'Sider LT (24 Pallets)':24,
-  'Bitrem (40 Pallets)':40,'Bitrem (41 Pallets)':41,
-  'Z9':25,'Z4':25,'ZE':24,'S3':40,'S6':41,
-};
 
-function gerarVBS() {
-  if(!dadosEnvio) { alert('Erro: abra o modal novamente.'); return; }
-
-  const matLata = (document.getElementById('envio-mat-sap')?.value||'').trim();
-  const lote    = (document.getElementById('envio-lote')?.value||'N000000000').trim();
-  const produto = (document.getElementById('envio-produto')?.value||'').trim();
-
-  if(!matLata) { alert('Informe o Material SAP da Lata para gerar o VBS.'); document.getElementById('envio-mat-sap').focus(); return; }
-
-  // Detectar ML
-  let sML = '269';
-  const p = (produto+matLata).toUpperCase();
-  if(p.includes('473')) sML='473';
-  else if(p.includes('350')||p.includes('335')) sML='350';
-  else if(p.includes('310')) sML='310';
-
-  // Código cliente
-  const cliKey = (dadosEnvio.cliente||'').toUpperCase().trim();
-  let codCli = CLI_MAP[dadosEnvio.cliente] || CLI_MAP[cliKey] || '';
-  if(!codCli) {
-    for(const [k,v] of Object.entries(CLI_MAP)) {
-      if(cliKey.includes(k.toUpperCase())||k.toUpperCase().includes(cliKey)) { codCli=v; break; }
-    }
-  }
-  if(!codCli) { codCli = prompt('Código SAP do cliente "'+dadosEnvio.cliente+'" não encontrado. Informe manualmente:',''); }
-  if(!codCli) return;
-
-  // Código transportadora — buscar no painel
-  const pr = (S.painel||[]).find(r=>r.cavalo===dadosEnvio.cavalo);
-  const transpNome = ((pr&&pr.transp)||dadosEnvio.transp||'').toUpperCase().trim();
-  let codTransp = TRANSP_MAP[transpNome] || '';
-  if(!codTransp) {
-    for(const [k,v] of Object.entries(TRANSP_MAP)) {
-      if(transpNome.includes(k.toUpperCase())||k.toUpperCase().includes(transpNome)) { codTransp=v; break; }
-    }
-  }
-  if(!codTransp) { codTransp = prompt('Código SAP da transportadora "'+transpNome+'" não encontrado. Informe manualmente:',''); }
-  if(!codTransp) return;
-
-  // Tipo e pallets
-  const tipoVeic = TIPO_VBS_MAP[dadosEnvio.veiculo]||TIPO_VBS_MAP[(dadosEnvio.veiculo||'').toUpperCase()]||'z9';
-  const nPal     = PALLETS_MAP[dadosEnvio.veiculo]||PALLETS_MAP[(dadosEnvio.veiculo||'').toUpperCase()]||25;
-
-  // Data hoje
-  const hj=new Date(), dd=String(hj.getDate()).padStart(2,'0'), mm=String(hj.getMonth()+1).padStart(2,'0');
-  const dataHj = dd+'.'+mm+'.'+hj.getFullYear();
-
-  // Quantidades
-  const lpp={'269':11088,'350':8169,'473':6224,'310':9504}[sML]||11088;
-  const fpp={'269':22,'350':22,'473':17,'310':22}[sML]||22;
-  const nLatas=nPal*lpp, nFolhas=nPal*fpp;
-
-  // Template VBS
-  const vbs =
-`' ============================================================
-' ROBÔ SAP - VL10C - EXPEDIÇÃO BR3R
-' Cavalo: ${dadosEnvio.cavalo} | Cliente: ${dadosEnvio.cliente}
-' Gerado: ${dataHj}
-' ============================================================
-
-If Not IsObject(application) Then
-   Set SapGuiAuto  = GetObject("SAPGUI")
-   Set application = SapGuiAuto.GetScriptingEngine
-End If
-If Not IsObject(connection) Then
-   Set connection = application.Children(0)
-End If
-If Not IsObject(session) Then
-   Set session = connection.Children(0)
-End If
-If IsObject(WScript) Then
-   WScript.ConnectObject session,     "on"
-   WScript.ConnectObject application, "on"
-End If
-
-Dim msg
-msg = "CONFIRMAR FATURAMENTO?" & vbCrLf & vbCrLf & _
-      "Cavalo:   ${dadosEnvio.cavalo}" & vbCrLf & _
-      "Cliente:  ${dadosEnvio.cliente} (${codCli})" & vbCrLf & _
-      "Veículo:  ${dadosEnvio.veiculo}" & vbCrLf & _
-      "Transp.:  ${transpNome} (${codTransp})" & vbCrLf & vbCrLf & _
-      "Lata:     ${matLata} (${sML}ml)" & vbCrLf & _
-      "Lote:     ${lote}" & vbCrLf & vbCrLf & _
-      "Latas:    ${nLatas.toLocaleString('pt-BR')}" & vbCrLf & _
-      "Paletes:  ${nPal}" & vbCrLf & _
-      "Topos:    ${nPal}" & vbCrLf & _
-      "Folhas:   ${nFolhas}"
-
-If MsgBox(msg, vbQuestion+vbYesNo, "Robô BR3R - VL10C") = vbNo Then WScript.Quit
-
-session.findById("wnd[0]").maximize
-session.findById("wnd[0]/usr/cntlIMAGE_CONTAINER/shellcont/shell/shellcont[0]/shell").expandNode "F00002"
-session.findById("wnd[0]/usr/cntlIMAGE_CONTAINER/shellcont/shell/shellcont[0]/shell").selectedNode = "F00003"
-session.findById("wnd[0]/usr/cntlIMAGE_CONTAINER/shellcont/shell/shellcont[0]/shell").topNode = "Favo"
-session.findById("wnd[0]/usr/cntlIMAGE_CONTAINER/shellcont/shell/shellcont[0]/shell").doubleClickNode "F00003"
-WScript.Sleep 1200
-
-session.findById("wnd[0]/usr/ctxtST_VSTEL-LOW").text = "BR3R"
-session.findById("wnd[0]/usr/ctxtST_LEDAT-LOW").text = "${dataHj}"
-session.findById("wnd[0]/usr/ctxtST_LEDAT-HIGH").text = "${dataHj}"
-session.findById("wnd[0]/usr/tabsTABSTRIP_ORDER_CRITERIA/tabpS0S_TAB1/ssub%_SUBSCREEN_ORDER_CRITERIA:RVV50R10C:1010/ctxtST_KUNWE-LOW").text = "${codCli}"
-session.findById("wnd[0]/usr/tabsTABSTRIP_ORDER_CRITERIA/tabpS0S_TAB1/ssub%_SUBSCREEN_ORDER_CRITERIA:RVV50R10C:1010/ctxtST_AUART-LOW").text = "ZBVN"
-session.findById("wnd[0]/usr/tabsTABSTRIP_ORDER_CRITERIA/tabpS0S_TAB1/ssub%_SUBSCREEN_ORDER_CRITERIA:RVV50R10C:1010/ctxtST_AUART-LOW").setFocus
-session.findById("wnd[0]/usr/tabsTABSTRIP_ORDER_CRITERIA/tabpS0S_TAB1/ssub%_SUBSCREEN_ORDER_CRITERIA:RVV50R10C:1010/ctxtST_AUART-LOW").caretPosition = 4
-session.findById("wnd[0]").sendVKey 8
-WScript.Sleep 1200
-
-session.findById("wnd[0]/usr/chk[1,5]").selected = True
-session.findById("wnd[0]/tbar[1]/btn[18]").press
-WScript.Sleep 1500
-
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02").select
-WScript.Sleep 600
-
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/ctxtLIPS-MATNR[1,1]").text = "${matLata}"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/ctxtLIPS-WERKS[2,1]").text = "BR3R"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/txtLIPSD-G_LFIMG[4,1]").text = "${nLatas}"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/txtLIPSD-PIKMG[6,0]").text = "${nLatas}"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/txtLIPSD-PIKMG[6,1]").text = "${nLatas}"
-
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/ctxtLIPS-MATNR[1,2]").text = "350000005"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/ctxtLIPS-WERKS[2,2]").text = "BR3R"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/txtLIPSD-G_LFIMG[4,2]").text = "${nPal}"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/txtLIPSD-PIKMG[6,2]").text = "${nPal}"
-
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/ctxtLIPS-MATNR[1,3]").text = "350000007"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/ctxtLIPS-WERKS[2,3]").text = "BR3R"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/txtLIPSD-G_LFIMG[4,3]").text = "${nPal}"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/txtLIPSD-PIKMG[6,3]").text = "${nPal}"
-
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/ctxtLIPS-CHARG[8,0]").text = "${lote}"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/ctxtLIPS-CHARG[8,0]").setFocus
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_OVERVIEW/tabpT\\02/ssubSUBSCREEN_BODY:SAPMV50A:1104/tblSAPMV50ATC_LIPS_PICK/ctxtLIPS-CHARG[8,0]").caretPosition = 10
-session.findById("wnd[0]").sendVKey 0
-WScript.Sleep 600
-
-session.findById("wnd[0]/tbar[1]/btn[8]").press
-WScript.Sleep 600
-
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\04").select
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\04/ssubSUBSCREEN_BODY:SAPMV50A:2108/ctxtLIKP-VSART").text = "${tipoVeic}"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\04/ssubSUBSCREEN_BODY:SAPMV50A:2108/ctxtLIKP-VSART").setFocus
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\04/ssubSUBSCREEN_BODY:SAPMV50A:2108/ctxtLIKP-VSART").caretPosition = 2
-session.findById("wnd[0]").sendVKey 0
-WScript.Sleep 600
-
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\08").select
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\08/ssubSUBSCREEN_BODY:SAPMV50A:2114/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,1]").text = "${codTransp}"
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\08/ssubSUBSCREEN_BODY:SAPMV50A:2114/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,1]").setFocus
-session.findById("wnd[0]/usr/tabsTAXI_TABSTRIP_HEAD/tabpT\\08/ssubSUBSCREEN_BODY:SAPMV50A:2114/subSUBSCREEN_PARTNER_OVERVIEW:SAPLV09C:1000/tblSAPLV09CGV_TC_PARTNER_OVERVIEW/ctxtGVS_TC_DATA-REC-PARTNER[1,1]").caretPosition = 5
-session.findById("wnd[0]").sendVKey 0
-WScript.Sleep 600
-
-session.findById("wnd[0]/tbar[0]/btn[11]").press
-WScript.Sleep 1000
-
-MsgBox "CONCLUÍDO!" & vbCrLf & vbCrLf & _
-       "Cavalo:  ${dadosEnvio.cavalo}" & vbCrLf & _
-       "Cliente: ${dadosEnvio.cliente}" & vbCrLf & _
-       "Latas:   ${nLatas.toLocaleString('pt-BR')}", _
-       vbInformation, "Robô BR3R - OK"
-`;
-
-  // Download
-  const blob = new Blob([vbs], {type:'text/plain;charset=utf-8'});
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href     = url;
-  a.download = 'VL10C_'+dadosEnvio.cavalo+'_'+(dadosEnvio.cliente||'').replace(/\s+/g,'_')+'.vbs';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-
-  const btn = document.querySelector('button[onclick="gerarVBS()"]');
-  if(btn){
-    const orig = btn.innerHTML;
-    btn.innerHTML='✅ VBS Gerado!';
-    btn.style.background='#047857';
-    setTimeout(()=>{btn.innerHTML=orig;btn.style.background='#059669';},3000);
-  }
-}
 </script>
 
-<script>
-function abrirFaturar(docaNum) {
-  // Ler dados da doca do localStorage
-  const cavalo   = localStorage.getItem('doca-cavalo-'  + docaNum) || '';
-  const cliente  = localStorage.getItem('doca-cliente-' + docaNum) || '';
-  const pallets  = parseInt(localStorage.getItem('doca-pallets-'+ docaNum)||'0');
-  const prod     = localStorage.getItem('doca-prod-'    + docaNum) || '';
-  const matSap   = (document.getElementById('doca-mat-'+docaNum)?.value||
-                   localStorage.getItem('doca-mat-sap-'+docaNum)||'').trim();
 
-  // Se não tem dados da doca, tentar pegar do GK (status=load)
-  let veiculo = '', transp = '';
-  const gkRow = (S.gk||[]).find(v =>
-    String(v['Cavalo']||v['plate_truck']||'').trim() === cavalo ||
-    String(v['Status GK']||'').toLowerCase() === 'load'
-  );
-  if(gkRow) {
-    veiculo = gkRow['Veículo'] || gkRow['vehicle_type'] || '';
-    transp  = gkRow['Transp.'] || gkRow['transporter']  || '';
-  }
-
-  // Se doca vier do GK diretamente
-  const gkLoad = (S.gk||[]).find(v =>
-    String(v['Status GK']||'').toLowerCase() === 'load' &&
-    (String(v['Doca']||'').includes(String(docaNum)) || String(v['doca']||'').includes(String(docaNum)))
-  );
-  if(gkLoad) {
-    if(!cavalo)  { var c = String(gkLoad['Cavalo']||gkLoad['plate_truck']||''); }
-    veiculo = gkLoad['Veículo'] || gkLoad['vehicle_type'] || veiculo;
-    transp  = gkLoad['Transp.'] || gkLoad['transporter']  || transp;
-  }
-
-  const cavaloFinal  = cavalo  || (gkLoad&&(gkLoad['Cavalo']||gkLoad['plate_truck'])) || '';
-  const clienteFinal = cliente || (gkLoad&&(gkLoad['Cliente']||gkLoad['client_name_collect'])) || '';
-
-  if(!cavaloFinal) { alert('Doca ' + docaNum + ' não tem veículo associado.'); return; }
-  if(!matSap)      { alert('Preencha o Material SAP da lata no campo acima da doca '+docaNum+'.'); return; }
-
-  // Montar dadosEnvio temporário para reutilizar gerarVBS
-  const dadosTemp = {
-    cavalo:  cavaloFinal,
-    cliente: clienteFinal,
-    veiculo: veiculo,
-    transp:  transp,
-    desc:    prod,
-    qtd:     pallets ? pallets * 11088 : 0,
-  };
-
-  // Guardar matSap e lote temporariamente
-  localStorage.setItem('doca-mat-sap-' + docaNum, matSap);
-
-  // Injetar no dadosEnvio e simular campos do modal
-  dadosEnvio = dadosTemp;
-
-  // Criar elementos temporários se não existirem
-  let elMat = document.getElementById('envio-mat-sap');
-  if(!elMat) {
-    elMat = document.createElement('input');
-    elMat.id = 'envio-mat-sap';
-    elMat.style.display = 'none';
-    document.body.appendChild(elMat);
-  }
-  elMat.value = matSap;
-
-  let elProd = document.getElementById('envio-produto');
-  if(!elProd) {
-    elProd = document.createElement('input');
-    elProd.id = 'envio-produto';
-    elProd.style.display = 'none';
-    document.body.appendChild(elProd);
-  }
-  elProd.value = prod;
-
-  let elLote = document.getElementById('envio-lote');
-  if(!elLote) {
-    elLote = document.createElement('input');
-    elLote.id = 'envio-lote';
-    elLote.style.display = 'none';
-    document.body.appendChild(elLote);
-  }
-  elLote.value = 'N000000000';
-
-  // Gerar VBS
-  gerarVBS();
-}
-</script>
 
 <script>
-const CAPACIDADE={'LATA':{total:15100,cap:15504},'TAMPA':{total:504,cap:1068},'TAMPA BÁSICA':{total:590,cap:684}};
+const CAPACIDADE={'LATA':{cap:15504},'TAMPA':{cap:1068},'TAMPA BÁSICA':{cap:684}};
 const KEY_HIST='br3r-prod-historico',KEY_MB52='br3r-prod-mb52',KEY_ZTSD123='br3r-prod-ztsd123',KEY_GRADE='br3r-prod-grade',KEY_ZTPP='br3r-prod-ztpp0011';
 let dadosMB52=null,chartsP={};
 
@@ -3295,37 +3549,91 @@ function loadMB52(inp){
     const wb=XLSX.read(e.target.result,{type:'binary'});
     const ws=wb.Sheets[wb.SheetNames[0]];
     const raw=XLSX.utils.sheet_to_json(ws,{defval:''});
-    let lata=0,tampa=0,tampaBasica=0,livreTotal=0,qualidadeTotal=0,bloqueadoTotal=0;
-    const porSKU={};
+
+    const rows=[];
+    const porMaterial={};
+    let livreTotal=0,qualidadeTotal=0,bloqueadoTotal=0;
+
     raw.forEach(r=>{
-      const centro=String(r['Centro']||'').trim();if(centro && centro!=='BR3R')return;
-      const mat=String(r['Material']||'').trim();
-      const descRaw=String(r['Texto breve material']||'').trim();
-      const desc=descRaw.toUpperCase();
-      const livre=parseFloat(r['Utilização livre']||0)||0;
-      const qualidade=parseFloat(r['Em contr.qualidade']||0)||0;
-      const bloqueado=parseFloat(r['Bloqueado']||0)||0;
-      livreTotal+=livre; qualidadeTotal+=qualidade; bloqueadoTotal+=bloqueado;
-      if(livre>0){
-        if(mat.startsWith('TA')){if(desc.includes('BASIC')||desc.includes('BSIC'))tampaBasica+=livre;else tampa+=livre;}
-        else if(mat.startsWith('CA')||mat.startsWith('6'))lata+=livre;
+      const centro=String(r['Centro']||'').trim();
+      if(centro && centro!=='BR3R') return;
+
+      const material=String(r['Material']||'').trim();
+      if(!material) return;
+      const descricao=String(r['Texto breve material']||r['Descrição material']||r['Descricao material']||'').trim();
+      const livre=numeroSeguro(r['Utilização livre'] ?? r['Utilizacao livre'] ?? r['Livre utilização'] ?? r['Livre utilizacao'] ?? 0);
+      const qualidade=numeroSeguro(r['Em contr.qualidade'] ?? r['Em contr. qualidade'] ?? r['Controle qualidade'] ?? 0);
+      const bloqueado=numeroSeguro(r['Bloqueado'] ?? 0);
+
+      livreTotal+=livre;
+      qualidadeTotal+=qualidade;
+      bloqueadoTotal+=bloqueado;
+
+      rows.push({
+        material,
+        descricao,
+        livre,
+        qualidade,
+        bloqueado,
+        total: livre+qualidade+bloqueado
+      });
+
+      if(!porMaterial[material]){
+        porMaterial[material]={
+          sku:material,
+          desc:descricao||'SEM DESCRIÇÃO',
+          livre:0,
+          qualidade:0,
+          bloqueado:0,
+          qtd:0
+        };
       }
-      const chave=mat||descRaw||'SEM SKU';
-      if(!porSKU[chave])porSKU[chave]={sku:mat||descRaw||'SEM SKU',desc:descRaw||mat||'SEM DESCRIÇÃO',qtd:0,qualidade:0,bloqueado:0};
-      porSKU[chave].qtd+=livre;
-      porSKU[chave].qualidade+=qualidade;
-      porSKU[chave].bloqueado+=bloqueado;
+      porMaterial[material].livre+=livre;
+      porMaterial[material].qualidade+=qualidade;
+      porMaterial[material].bloqueado+=bloqueado;
+      porMaterial[material].qtd+=livre+qualidade+bloqueado;
+      if(!porMaterial[material].desc && descricao) porMaterial[material].desc=descricao;
     });
-    const saldoPorSKU=Object.values(porSKU).map(item=>({...item,
-      qtd:Math.round(item.qtd*1000)/1000,
-      qualidade:Math.round(item.qualidade*1000)/1000,
-      bloqueado:Math.round(item.bloqueado*1000)/1000
-    })).sort((a,b)=>b.qtd-a.qtd);
-    const topSaldo=saldoPorSKU.slice(0,10);
-    dadosMB52={lata,tampa,tampaBasica,total:lata+tampa+tampaBasica,topSaldo,saldoPorSKU,livreTotal,qualidadeTotal,bloqueadoTotal};
+
+    const ocupacao = calcularOcupacaoMB52(rows);
+
+    const saldoPorSKU=Object.values(porMaterial)
+      .map(item=>({
+        sku:item.sku||'SEM SKU',
+        desc:item.desc||'SEM DESCRIÇÃO',
+        livre:Math.round((item.livre||0)*1000)/1000,
+        qualidade:Math.round((item.qualidade||0)*1000)/1000,
+        bloqueado:Math.round((item.bloqueado||0)*1000)/1000,
+        qtd:Math.round((item.qtd||0)*1000)/1000
+      }))
+      .sort((a,b)=>b.livre-a.livre);
+
+    const topSaldo=(ocupacao.topMateriais||[]).slice(0,10).map(item=>({
+      sku:item.material||'SEM SKU',
+      desc:item.descricao||'SEM DESCRIÇÃO',
+      livre:Math.round((item.livre||0)*1000)/1000,
+      qualidade:Math.round((item.qualidade||0)*1000)/1000,
+      bloqueado:Math.round((item.bloqueado||0)*1000)/1000,
+      qtd:Math.round((item.total||0)*1000)/1000
+    }));
+
+    dadosMB52={
+      raw: rows,
+      saldoPorSKU,
+      topSaldo,
+      livreTotal,
+      qualidadeTotal,
+      bloqueadoTotal,
+      lata: ocupacao.estoqueMI['LATA']||0,
+      tampa: ocupacao.estoqueMI['TAMPA']||0,
+      tampaBasica: ocupacao.estoqueMI['TAMPA BÁSICA']||0,
+      pallets: ocupacao.pallets,
+      resumoOcupacao: ocupacao.resumo
+    };
+
     localStorage.setItem(KEY_MB52,JSON.stringify(dadosMB52));
     document.getElementById('uz-mb52p').classList.add('ok');
-    document.getElementById('ok-mb52p').textContent=`✅ ${raw.length} materiais`;
+    document.getElementById('ok-mb52p').textContent=`✅ ${rows.length} materiais · LATA ${fmtN(dadosMB52.pallets['LATA'])} | TAMPA ${fmtN(dadosMB52.pallets['TAMPA'])} | BÁSICA ${fmtN(dadosMB52.pallets['TAMPA BÁSICA'])}`;
     document.getElementById('ok-mb52p').style.display='block';
     document.getElementById('btnProcessar').disabled=false;
   }catch(ex){alert('Erro MB52: '+ex.message);}};
@@ -3556,16 +3864,153 @@ function renderKPIs(hist,mb52){
   const gs=localStorage.getItem(KEY_GRADE);if(gs)atualizarKPIGrade(JSON.parse(gs));
 }
 
+
+function normalizarTextoOcup(v){
+  return String(v||'')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g,'')
+    .toUpperCase()
+    .trim();
+}
+
+function numeroSeguro(v){
+  if(typeof v==='number') return Number.isFinite(v)?v:0;
+  if(v===null || v===undefined || v==='') return 0;
+  const n=parseFloat(String(v).replace(/\./g,'').replace(',','.').replace(/[^\d.-]/g,''));
+  return Number.isFinite(n)?n:0;
+}
+
+function detectarMlLata(material,descricao){
+  const texto=normalizarTextoOcup(`${material} ${descricao}`);
+  if(/\b473\b/.test(texto)) return 473;
+  if(/\b269\b/.test(texto)) return 269;
+  if(/\b355\b/.test(texto)) return 355;
+  if(/\b350\b/.test(texto)) return 350;
+  if(/\b340\b/.test(texto)) return 340;
+  if(/\b310\b/.test(texto)) return 310;
+  return 350;
+}
+
+function conversaoPalletLata(ml){
+  // A MB52 da LATA está em MI, então a conversão precisa ser MI por pallet.
+  // Mantém TAMPA e TAMPA BÁSICA intactas.
+  // 269 ml ≈ 11.088 MI/pallet
+  // 473 ml ≈ 6.224 MI/pallet
+  // 350/355/340 ml ≈ 8.169 MI/pallet
+  if(ml===269) return 11.088;
+  if(ml===473) return 6.224;
+  return 8.169;
+}
+
+function conversaoPalletTampa(tipo){
+  // MB52 também está em MI para tampas/chapas.
+  // Fator calibrado para refletir os pallets físicos do armazém.
+  if(tipo==='TAMPA BÁSICA') return 288.83;
+  return 289.12;
+}
+
+function classificarTipoOcupacao(material,descricao){
+  const mat=normalizarTextoOcup(material);
+  const desc=normalizarTextoOcup(descricao);
+  const texto=`${mat} ${desc}`;
+
+  if(texto.includes('CHAPA')) return 'TAMPA BÁSICA';
+  if(texto.includes('TAMPA')) return 'TAMPA';
+  if(mat.startsWith('TA') && !texto.includes('CHAPA')) return 'TAMPA';
+  if(mat.startsWith('CH')) return 'TAMPA BÁSICA';
+  return 'LATA';
+}
+
+function calcularOcupacaoMB52(rows){
+  const pallets={'LATA':0,'TAMPA':0,'TAMPA BÁSICA':0};
+  const estoqueMI={'LATA':0,'TAMPA':0,'TAMPA BÁSICA':0};
+  const topMateriais=[];
+
+  (rows||[]).forEach(item=>{
+    const material=item.material||'';
+    const descricao=item.descricao||'';
+    const tipo=classificarTipoOcupacao(material,descricao);
+    const total=numeroSeguro(item.total);
+    const qualidade=numeroSeguro(item.qualidade);
+    const bloqueado=numeroSeguro(item.bloqueado);
+
+    estoqueMI[tipo]+=total;
+    topMateriais.push({...item,tipo,qualidade,bloqueado,total});
+
+    if(tipo==='LATA'){
+      const ml=detectarMlLata(material,descricao);
+      const conv=conversaoPalletLata(ml);
+      pallets['LATA']+= total/conv;
+      return;
+    }
+
+    const convTampa=conversaoPalletTampa(tipo);
+    pallets[tipo]+= total/convTampa;
+  });
+
+  pallets['LATA']=Math.round(pallets['LATA']);
+  pallets['TAMPA']=Math.round(pallets['TAMPA']);
+  pallets['TAMPA BÁSICA']=Math.round(pallets['TAMPA BÁSICA']);
+
+  const resumo={
+    'LATA':{
+      ocupados:pallets['LATA'],
+      cap:CAPACIDADE['LATA'].cap,
+      pct:CAPACIDADE['LATA'].cap? (pallets['LATA']/CAPACIDADE['LATA'].cap)*100 : 0
+    },
+    'TAMPA':{
+      ocupados:pallets['TAMPA'],
+      cap:CAPACIDADE['TAMPA'].cap,
+      pct:CAPACIDADE['TAMPA'].cap? (pallets['TAMPA']/CAPACIDADE['TAMPA'].cap)*100 : 0
+    },
+    'TAMPA BÁSICA':{
+      ocupados:pallets['TAMPA BÁSICA'],
+      cap:CAPACIDADE['TAMPA BÁSICA'].cap,
+      pct:CAPACIDADE['TAMPA BÁSICA'].cap? (pallets['TAMPA BÁSICA']/CAPACIDADE['TAMPA BÁSICA'].cap)*100 : 0
+    }
+  };
+
+  return {
+    pallets,
+    estoqueMI,
+    resumo,
+    topMateriais: topMateriais.sort((a,b)=>numeroSeguro(b.total)-numeroSeguro(a.total))
+  };
+}
+
+function obterEstoqueLabel(tipo,mb52){
+  if(!mb52) return '';
+  const valor = tipo==='LATA'
+    ? numeroSeguro(mb52.lata)
+    : tipo==='TAMPA'
+      ? numeroSeguro(mb52.tampa)
+      : numeroSeguro(mb52.tampaBasica);
+  return valor>0 ? `<div style="font-size:10px;color:var(--text3);margin-top:6px;">📦 ${fmtMI(valor)} MI estoque</div>` : '';
+}
+
+function classeOcupacao(pct){
+  if(pct>=95) return 'critico';
+  if(pct>=80) return 'alto';
+  return 'normal';
+}
+
 function renderOcupacao(mb52){
-  const dados=[{tipo:'LATA',ocupados:15100,cap:15504},{tipo:'TAMPA',ocupados:504,cap:1068},{tipo:'TAMPA BÁSICA',ocupados:590,cap:684}];
-  const lata_mi=mb52?mb52.lata:null,tampa_mi=mb52?mb52.tampa:null;
-  document.getElementById('ocu-grid').innerHTML=dados.map((d,i)=>{
-    const pct=Math.round(d.ocupados/d.cap*100),cls=pct>=95?'critico':pct>=80?'alto':'normal';
-    const mi=i===0?lata_mi:i===1?tampa_mi:null;
-    const miStr=mi?`<div style="font-size:10px;color:var(--text3);margin-top:6px;">📦 ${fmtMI(mi)} MI estoque</div>`:'';
-    return `<div class="ocu-card"><div class="ocu-header"><div><div class="ocu-tipo">${d.tipo}</div>${miStr}</div><div class="ocu-pct ${cls}">${pct}%</div></div><div class="ocu-bar-wrap"><div class="ocu-bar ${cls}" style="width:${Math.min(pct,100)}%"></div></div><div class="ocu-nums"><span>${fmtN(d.ocupados)} paletes</span><span>Cap: ${fmtN(d.cap)}</span></div><div style="margin-top:10px;font-size:10px;color:var(--text3);">Livres: <strong style="color:${cls==='critico'?'var(--red)':cls==='alto'?'var(--amber)':'var(--green)'}">${fmtN(d.cap-d.ocupados)}</strong></div></div>`;
+  const resumo = mb52?.resumoOcupacao || calcularOcupacaoMB52(mb52?.raw||[]).resumo;
+  const dados=[
+    {tipo:'LATA',ocupados:resumo['LATA']?.ocupados||0,cap:CAPACIDADE['LATA'].cap},
+    {tipo:'TAMPA',ocupados:resumo['TAMPA']?.ocupados||0,cap:CAPACIDADE['TAMPA'].cap},
+    {tipo:'TAMPA BÁSICA',ocupados:resumo['TAMPA BÁSICA']?.ocupados||0,cap:CAPACIDADE['TAMPA BÁSICA'].cap}
+  ];
+  document.getElementById('ocu-grid').innerHTML=dados.map(d=>{
+    const pctReal=d.cap?((d.ocupados/d.cap)*100):0;
+    const pct=Math.round(pctReal);
+    const cls=classeOcupacao(pctReal);
+    const livres=d.cap-d.ocupados;
+    const miStr=obterEstoqueLabel(d.tipo,mb52);
+    return `<div class="ocu-card"><div class="ocu-header"><div><div class="ocu-tipo">${d.tipo}</div>${miStr}</div><div class="ocu-pct ${cls}">${pct}%</div></div><div class="ocu-bar-wrap"><div class="ocu-bar ${cls}" style="width:${Math.min(pctReal,100)}%"></div></div><div class="ocu-nums"><span>${fmtN(d.ocupados)} paletes</span><span>Cap: ${fmtN(d.cap)}</span></div><div style="margin-top:10px;font-size:10px;color:var(--text3);">Livres: <strong style="color:${livres<0?'var(--red)':cls==='critico'?'var(--red)':cls==='alto'?'var(--amber)':'var(--green)'}">${fmtN(livres)}</strong></div></div>`;
   }).join('');
 }
+
 
 function renderChartMain(hist){
   if(chartsP.main){try{chartsP.main.destroy();}catch(e){}}
@@ -3731,9 +4176,12 @@ function renderCoverageCard(mb52,grade){
     el.innerHTML=`<div class="sku-row"><span class="sku-name">Carregue MB52 e ZTSD0012 para ver os SKUs faltantes.</span></div>`;
     return;
   }
-  const saldoMap=new Map(saldoArr.map(item=>[String(item.sku||'').trim(), item]));
+
+  const norm=v=>String(v||'').trim().replace(/^0+/,'');
+  const saldoMap=new Map(saldoArr.map(item=>[norm(item.sku), item]));
   const faltantes=gradeArr.map(item=>{
-    const saldoLivre=saldoMap.get(String(item.id||'').trim())?.qtd||0;
+    const saldoItem=saldoMap.get(norm(item.id))||null;
+    const saldoLivre=saldoItem?numeroSeguro(saldoItem.livre ?? saldoItem['Utilização livre'] ?? saldoItem['Utilizacao livre'] ?? saldoItem.qtdLivre ?? 0):0;
     const faltante=Math.max((item.qtd||0)-saldoLivre,0);
     return {
       sku:item.id,
@@ -3849,28 +4297,47 @@ function fmtDiaShort(iso){if(!iso)return'—';const[y,m,d]=iso.split('-');return
 </script>
 
 <script>
-// Corrigir goTab para usar classes hdr-tab
+// Navegação protegida para não deixar uma aba quebrar as outras
 function goTab(btn, id) {
-  document.querySelectorAll('.hdr-tab').forEach(t => t.classList.remove('on'));
-  btn.classList.add('on');
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
-  document.getElementById('page-'+id).classList.add('on');
-  if(id==='relatorio') gerarRel();
-  if(id==='analise' && typeof rodarAnalise==='function') setTimeout(rodarAnalise, 100);
-  if(id==='docas'   && typeof renderDocas==='function')  setTimeout(renderDocas,  100);
-  if(id==='producao' && typeof renderComHistorico==='function') setTimeout(renderComHistorico, 100);
+  try {
+    document.querySelectorAll('.hdr-tab').forEach(t => t.classList.remove('on'));
+    if(btn) btn.classList.add('on');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+    const page = document.getElementById('page-'+id);
+    if(page) page.classList.add('on');
+
+    if(id==='relatorio' && typeof gerarRel==='function') {
+      try { gerarRel(); } catch(e) { console.error('Erro ao renderizar relatório:', e); }
+    }
+    if(id==='analise' && typeof rodarAnalise==='function') {
+      setTimeout(()=>{ try { rodarAnalise(); } catch(e) { console.error('Erro na análise:', e); } }, 100);
+    }
+    if(id==='docas' && typeof renderDocas==='function') {
+      setTimeout(()=>{ try { renderDocas(); } catch(e) { console.error('Erro nas docas:', e); } }, 100);
+    }
+    if(id==='producao' && typeof renderComHistorico==='function') {
+      setTimeout(()=>{ try { renderComHistorico(); } catch(e) { console.error('Erro na produção:', e); } }, 100);
+    }
+  } catch(e) {
+    console.error('Erro ao trocar aba:', e);
+  }
 }
 
-// Event delegation docas
 document.addEventListener('click', function(e) {
-  const v = e.target.closest('.btn-vbs');
   const l = e.target.closest('.btn-liberar');
-  if(l) { const n=parseInt(l.getAttribute('data-doca')); if(!isNaN(n)) liberarDoca(n); }
+  if(l && typeof liberarDoca === 'function') {
+    const n=parseInt(l.getAttribute('data-doca'));
+    if(!isNaN(n)) {
+      try { liberarDoca(n); } catch(err) { console.error('Erro ao liberar doca:', err); }
+    }
+  }
 });
 
 setInterval(function(){
   const pd=document.getElementById('page-docas');
-  if(pd&&pd.classList.contains('on')) renderDocas();
+  if(pd && pd.classList.contains('on') && typeof renderDocas==='function') {
+    try { renderDocas(); } catch(e) { console.error('Erro ao atualizar docas:', e); }
+  }
 },60000);
 </script>
 </body>
