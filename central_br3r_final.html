@@ -1641,7 +1641,7 @@ tr:hover td{background:#F9FCFF;}
     <div class="kpi-card blue"><div class="kpi-label">Fabricado (período)</div><div class="kpi-value blue" id="kpi-fab">—</div><div class="kpi-sub" id="kpi-fab-sub">—</div></div>
     <div class="kpi-card green"><div class="kpi-label">Faturado (período)</div><div class="kpi-value green" id="kpi-fat">—</div><div class="kpi-sub" id="kpi-fat-sub">—</div></div>
     <div class="kpi-card" id="kpi-saldo-card"><div class="kpi-label">Diferença Produção × Faturado</div><div class="kpi-value" id="kpi-saldo">—</div><div class="kpi-sub" id="kpi-saldo-sub">—</div></div>
-    <div class="kpi-card indigo"><div class="kpi-label">Média diária fab.</div><div class="kpi-value indigo" id="kpi-media">—</div><div class="kpi-sub">MI / dia</div></div>
+    <div class="kpi-card indigo"><div class="kpi-label">Meta fab. diária</div><div class="kpi-value indigo" id="kpi-media">9.0M</div><div class="kpi-sub">MI / dia</div></div>
     <div class="kpi-card amber"><div class="kpi-label">Grade pendente</div><div class="kpi-value amber" id="kpi-pendente">—</div><div class="kpi-sub" id="kpi-pendente-sub">Carregue ZTSD0012</div></div>
   </div>
 
@@ -3810,7 +3810,6 @@ function loadZTSD123(inp){
       const dia=d.toISOString().slice(0,10);
       const mes=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
       const cliId=String(r['Cliente']||r['Nome Cliente']||'SEM_CLIENTE').trim();
-      if(cliId==='0000072767') return;
       const cliNome=String(r['Nome Cliente']||r['Cliente']||'SEM CLIENTE').trim();
       const skuId=String(r['Material']||r['Desc.Material']||'SEM_SKU').trim();
       const skuDesc=String(r['Desc.Material']||r['Texto breve material']||r['Material']||'SEM DESCRIÇÃO').trim();
@@ -3914,7 +3913,7 @@ function renderKPIs(hist,mb52){
     document.getElementById('kpi-saldo-sub').textContent='Faturado de latas acima da produção';
   }
 
-  document.getElementById('kpi-media').textContent=fmtMI(media);
+  document.getElementById('kpi-media').textContent='9.0M';
   const gs=localStorage.getItem(KEY_GRADE);if(gs)atualizarKPIGrade(JSON.parse(gs));
 }
 
