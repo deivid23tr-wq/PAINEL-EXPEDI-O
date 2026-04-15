@@ -1871,7 +1871,7 @@ function loadFile(tipo, inp) {
 }
 
 // ── HELPERS ───────────────────────────────────────────────────────────────────
-const tL=d=>{const s=String(d);return s.includes('473')?{t:'473ml',lpp:6224}:s.includes('350')?{t:'350ml',lpp:8169}:s.includes('269')?{t:'269ml',lpp:11088}:{t:'?',lpp:0};};
+const tL=d=>{const s=String(d);return s.includes('473')?{t:'473ml',lpp:6224}:s.includes('355')?{t:'355ml',lpp:8448}:s.includes('350')?{t:'350ml',lpp:8169}:s.includes('269')?{t:'269ml',lpp:11088}:{t:'?',lpp:0};};
 const pallets=v=>{const s=String(v);return s.includes('41')?41:s.includes('40')?40:s.includes('32')?32:s.includes('25')?25:s.includes('24')?24:0;};
 const fN=n=>Number(n).toLocaleString('pt-BR');
 const fMil=n=>((Number(n)||0)/1000).toLocaleString('pt-BR',{minimumFractionDigits:3,maximumFractionDigits:3});
@@ -1902,11 +1902,16 @@ function analisar(){
   const limpa = s => String(s||'').replace(/[\xa0\u200b\u00a0]/g,'').trim();
   const norm  = s => limpa(s).toUpperCase();
 
-  // ── MB52: saldo total por material (Depósito 0700 · Utilização livre · em MI) ──
+  // ── MB52: saldo total por material (somente 0700 livre · centros BR3R/RISC · sem estoque especial) ──
   const mb52m = {};
   (S.mb52||[]).forEach(r => {
     const dep = limpa(r['Depósito'] || r['Deposito'] || r['Depósito MRP'] || r['Deposito MRP'] || '');
-    if(dep && dep !== '0700') return;
+    const centro = norm(r['Centro'] || '');
+    const estEsp = limpa(r['Estoque especial'] || '');
+    const nEstEsp = limpa(r['Nº estoque especial'] || r['No estoque especial'] || r['N estoque especial'] || '');
+    if(dep !== '0700') return;
+    if(centro && centro !== 'BR3R' && centro !== 'RISC') return;
+    if(estEsp || nEstEsp) return;
     const mat = limpa(r['Material']);
     const sv  = parseFloat(r['Utilização livre'] || r['Utilizacao livre'] || 0) || 0;
     if(mat) mb52m[mat] = (mb52m[mat]||0) + sv;
@@ -1915,6 +1920,7 @@ function analisar(){
   const tL = d => {
     const s = String(d);
     if(s.includes('473')) return {t:'473ml', lpp:6224};
+    if(s.includes('355')) return {t:'355ml', lpp:8448};
     if(s.includes('350')) return {t:'350ml', lpp:8169};
     if(s.includes('269')) return {t:'269ml', lpp:11088};
     return {t:'?', lpp:0};
@@ -2164,7 +2170,12 @@ function recalcularAcaoPorCliente(){
 
   (S.mb52||[]).forEach(r=>{
     const dep = limpa(r['Depósito'] || r['Deposito'] || r['Depósito MRP'] || r['Deposito MRP'] || '');
-    if(dep && dep !== '0700') return;
+    const centro = norm(r['Centro'] || '');
+    const estEsp = limpa(r['Estoque especial'] || '');
+    const nEstEsp = limpa(r['Nº estoque especial'] || r['No estoque especial'] || r['N estoque especial'] || '');
+    if(dep !== '0700') return;
+    if(centro && centro !== 'BR3R' && centro !== 'RISC') return;
+    if(estEsp || nEstEsp) return;
     const mat = limpa(r['Material']);
     const livre = parseFloat(r['Utilização livre'] || r['Utilizacao livre'] || 0) || 0;
     if(mat) mb52PorMat[mat] = (mb52PorMat[mat]||0) + (livre * 1000);
@@ -2287,6 +2298,7 @@ function renderBitremSummary(){
   const lppDe = desc => {
     const s = String(desc||'');
     if(s.includes('473')) return 6224;
+    if(s.includes('355')) return 8448;
     if(s.includes('350')) return 8169;
     if(s.includes('269')) return 11088;
     return 0;
@@ -2295,7 +2307,12 @@ function renderBitremSummary(){
   const mb52Latas = {};
   (S.mb52||[]).forEach(r => {
     const dep = limpa(r['Depósito']||r['Deposito']||'');
-    if(dep && dep !== '0700') return;
+    const centro = norm(r['Centro'] || '');
+    const estEsp = limpa(r['Estoque especial'] || '');
+    const nEstEsp = limpa(r['Nº estoque especial'] || r['No estoque especial'] || r['N estoque especial'] || '');
+    if(dep !== '0700') return;
+    if(centro && centro !== 'BR3R' && centro !== 'RISC') return;
+    if(estEsp || nEstEsp) return;
     const mat = limpa(r['Material']);
     const mi  = parseFloat(r['Utilização livre']||r['Utilizacao livre']||0)||0;
     if(mat) mb52Latas[mat] = (mb52Latas[mat]||0) + (mi * 1000);
@@ -3556,7 +3573,7 @@ function loadMB52(inp){
 
     raw.forEach(r=>{
       const centro=String(r['Centro']||'').trim();
-      if(centro && centro!=='BR3R') return;
+      if(centro && centro!=='BR3R' && centro!=='RISC') return;
 
       const material=String(r['Material']||'').trim();
       if(!material) return;
@@ -3660,7 +3677,7 @@ function loadZTSD0012(inp){
       let totalMI=0;
       const porCliente={}, porSKU={};
       raw.forEach(r=>{
-        const centro=String(r['Centro']||'').trim();if(centro && centro!=='BR3R')return;
+        const centro=String(r['Centro']||'').trim();if(centro && centro!=='BR3R' && centro!=='RISC')return;
         const inc=String(r['Incoterms']||'').toUpperCase();
         const saldo=parseFloat(r['Saldo']||0)||0;
         const remProc=parseFloat(r['Qtd Rem. Proc']||r['Qtd Rem Proc']||0)||0;
@@ -3757,7 +3774,7 @@ function loadZTSD123(inp){
     const raw=XLSX.utils.sheet_to_json(ws,{defval:''});
     const pm={}, porDia={}, topFat={}, porCliente={}, porSKU={};
     raw.forEach(r=>{
-      const centro=String(r['Centro']||'').trim();if(centro && centro!=='BR3R')return;
+      const centro=String(r['Centro']||'').trim();if(centro && centro!=='BR3R' && centro!=='RISC')return;
       const dt=r['Dt.Remessa']||r['Data de remessa']||r['Data Remessa']||r['Data'];
       const qtd=parseFloat(r['Qtd.Fornecida']||r['Qtd Fornecida']||r['Quantidade']||0)||0;
       if(!dt||!isFinite(qtd)||qtd<=0)return;
@@ -4225,16 +4242,22 @@ function renderCoverageCard(mb52,grade){
 
   const norm=v=>String(v||'').trim().replace(/^0+/,'');
   const saldoMap=new Map(saldoArr.map(item=>[norm(item.sku), item]));
+  const lppDoCoverage=desc=>{const s=String(desc||'');if(s.includes('473'))return 6224;if(s.includes('355'))return 8448;if(s.includes('350'))return 8169;if(s.includes('269'))return 11088;return 0;};
   const faltantes=gradeArr.map(item=>{
     const saldoItem=saldoMap.get(norm(item.id))||null;
     const saldoLivre=saldoItem?numeroSeguro(saldoItem.livre ?? saldoItem['Utilização livre'] ?? saldoItem['Utilizacao livre'] ?? saldoItem.qtdLivre ?? 0):0;
     const faltante=Math.max((item.qtd||0)-saldoLivre,0);
+    const lpp=lppDoCoverage(item.desc);
+    const faltaPlts=lpp>0?Math.ceil(faltante*1000/lpp):0;
+    const faltaMI=lpp>0&&faltaPlts>0?Math.round(faltaPlts*lpp)/1000:faltante;
     return {
       sku:item.id,
       desc:item.desc,
       grade:item.qtd||0,
       saldoLivre,
-      faltante
+      faltante,
+      faltaPlts,
+      faltaMI
     };
   }).filter(item=>item.faltante>0.001).sort((a,b)=>b.faltante-a.faltante).slice(0,8);
 
@@ -4258,13 +4281,14 @@ function renderCoverageCard(mb52,grade){
     return;
   }
 
-  const totalFaltante=faltantes.reduce((a,b)=>a+b.faltante,0);
+  const totalFaltaPlts=faltantes.reduce((a,b)=>a+(b.faltaPlts||0),0);
+  const totalFaltaMI=faltantes.reduce((a,b)=>a+(b.faltaMI||0),0);
   const max=faltantes[0].faltante||1;
   el.innerHTML=`
     <div style="padding:14px 16px;border-bottom:1px solid var(--border);font-size:12px;color:var(--text3);">
-      ${faltantes.length} SKU(s) sem saldo livre suficiente · falta total <strong style="color:var(--red)">${fmtMI(totalFaltante)}</strong>
+      ${faltantes.length} SKU(s) sem saldo livre suficiente · falta <strong style="color:var(--red)">${totalFaltaPlts} pallets</strong> <span style="color:var(--text3)">(${fmtMI(totalFaltaMI)} MI)</span>
     </div>
-    ${faltantes.map((s,i)=>`<div class="sku-row"><span class="sku-pos">${i+1}</span><span class="sku-name" title="${s.sku} — ${s.desc}">${s.desc}</span><div class="sku-bar-wrap"><div style="width:${Math.max(4,(s.faltante/max)*100)}%;height:100%;border-radius:20px;background:rgba(201,36,36,0.78);"></div></div><span class="sku-qtd" style="color:var(--red)">${fmtMI(s.faltante)}</span></div>`).join('')}
+    ${faltantes.map((s,i)=>`<div class="sku-row"><span class="sku-pos">${i+1}</span><span class="sku-name" title="${s.sku} — ${s.desc}">${s.desc}</span><div class="sku-bar-wrap"><div style="width:${Math.max(4,(s.faltante/max)*100)}%;height:100%;border-radius:20px;background:rgba(201,36,36,0.78);"></div></div><span class="sku-qtd" style="color:var(--red);text-align:right;line-height:1.3">${s.faltaPlts>0?s.faltaPlts+' plts':'—'}<br><span style="font-size:10px;font-weight:400;color:var(--text3)">${fmtMI(s.faltaMI)} MI</span></span></div>`).join('')}
   `;
 }
 
