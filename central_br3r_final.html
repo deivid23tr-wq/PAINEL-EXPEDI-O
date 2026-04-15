@@ -3765,6 +3765,7 @@ function loadZTSD123(inp){
       const dia=d.toISOString().slice(0,10);
       const mes=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
       const cliId=String(r['Cliente']||r['Nome Cliente']||'SEM_CLIENTE').trim();
+      if(cliId==='0000072767') return;
       const cliNome=String(r['Nome Cliente']||r['Cliente']||'SEM CLIENTE').trim();
       const skuId=String(r['Material']||r['Desc.Material']||'SEM_SKU').trim();
       const skuDesc=String(r['Desc.Material']||r['Texto breve material']||r['Material']||'SEM DESCRIÇÃO').trim();
@@ -3859,12 +3860,12 @@ function renderKPIs(hist,mb52){
   sEl.textContent=fmtMI(saldoAbs);
 
   if(saldo>=0){
-    sEl.className='kpi-value green';
-    sC.className='kpi-card green';
-    document.getElementById('kpi-saldo-sub').textContent='Produção de latas acima do faturado';
-  }else{
     sEl.className='kpi-value red';
     sC.className='kpi-card red';
+    document.getElementById('kpi-saldo-sub').textContent='Produção de latas acima do faturado';
+  }else{
+    sEl.className='kpi-value green';
+    sC.className='kpi-card green';
     document.getElementById('kpi-saldo-sub').textContent='Faturado de latas acima da produção';
   }
 
@@ -4075,7 +4076,11 @@ function renderTopSKUs(tF,tFt){
 
 function renderHistorico(hist){
   document.getElementById('hist-info').textContent=`${hist.length} dias registrados`;
-  document.getElementById('hist-tbody').innerHTML=[...hist].reverse().map(d=>{const s=(d.fab||0)-(d.fat||0);return`<tr><td class="mono">${fmtDia(d.dia)}</td><td class="mono" style="color:var(--ball)">${fmtMI(d.fab||0)}</td><td class="mono" style="color:var(--green)">${fmtMI(d.fat||0)}</td><td><span class="badge-saldo ${s>=0?'pos':'neg'}">${s>=0?'+':''}${fmtMI(s)}</span></td><td class="mono" style="font-size:11px">${d.fab_lata!==undefined?fmtMI(d.fab_lata):'—'}</td><td class="mono" style="font-size:11px">${d.fat_lata!==undefined?fmtMI(d.fat_lata):'—'}</td><td class="mono" style="font-size:11px">${d.fat_tampa!==undefined?fmtMI(d.fat_tampa):'—'}</td></tr>`;}).join('');
+  document.getElementById('hist-tbody').innerHTML=[...hist].reverse().map(d=>{
+    const s=(d.fab_lata||0)-(d.fat_lata||0);
+    const saldoClass=s>=0?'neg':'pos';
+    return`<tr><td class="mono">${fmtDia(d.dia)}</td><td class="mono" style="color:var(--ball)">${fmtMI(d.fab||0)}</td><td class="mono" style="color:var(--green)">${fmtMI(d.fat||0)}</td><td><span class="badge-saldo ${saldoClass}">${s>=0?'+':''}${fmtMI(s)}</span></td><td class="mono" style="font-size:11px">${d.fab_lata!==undefined?fmtMI(d.fab_lata):'—'}</td><td class="mono" style="font-size:11px">${d.fat_lata!==undefined?fmtMI(d.fat_lata):'—'}</td><td class="mono" style="font-size:11px">${d.fat_tampa!==undefined?fmtMI(d.fat_tampa):'—'}</td></tr>`;
+  }).join('');
 }
 
 function renderZTSD(d){
