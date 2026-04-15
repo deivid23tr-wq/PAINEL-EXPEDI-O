@@ -272,6 +272,7 @@ tr:hover td{background:#F8FAFC;}
 .badge.red{background:var(--red-bg);color:var(--red);border-color:var(--red-bdr);}.badge.red::before{background:var(--red);}
 .badge.blue{background:var(--blue-bg);color:var(--blue);border-color:var(--blue-bdr);}.badge.blue::before{background:var(--blue);}
 .badge.indigo{background:var(--indigo-bg);color:var(--indigo);border-color:var(--indigo-bdr);}.badge.indigo::before{background:var(--indigo);}
+.badge.purple{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-bdr);}.badge.purple::before{background:var(--purple);}
 .badge.gray{background:#F1F5F9;color:#64748B;border-color:#E2E8F0;}.badge.gray::before{background:#94A3B8;}
 
 /* ══ BTN SEND ═════════════════════════════════════════════════════ */
@@ -996,6 +997,12 @@ tr:hover td{background:#F9FCFF;}
   .analysis-highlight-grid,.docas-resumo-grid{grid-template-columns:1fr;}
 }
 
+@media (max-width: 980px){
+  .summary-desc-box{min-width:0;}
+  .summary-desc-line{white-space:normal;}
+  #tBitremSummary tbody tr td:first-child{min-width:320px;}
+}
+
 @media(max-width:720px){
   #page-producao .pg-header{flex-direction:column;align-items:flex-start;gap:14px;}
   #page-producao .kpi-grid{grid-template-columns:1fr;}
@@ -1009,7 +1016,7 @@ tr:hover td{background:#F9FCFF;}
 #tBitremSummary thead th{position:sticky;top:0;z-index:2;background:transparent;vertical-align:bottom;}
 #tBitremSummary tbody td{vertical-align:middle;line-height:1.35;}
 #tBitremSummary tbody tr:hover td{background:#F7FBFF;}
-#tBitremSummary tbody tr td:first-child{min-width:140px;}
+#tBitremSummary tbody tr td:first-child{min-width:520px;}
 #tBitremSummary tbody tr td:nth-child(2){min-width:140px;}
 #tBitremSummary tbody tr td:nth-child(5),
 #tBitremSummary tbody tr td:nth-child(4),
@@ -1019,7 +1026,8 @@ tr:hover td{background:#F9FCFF;}
 .summary-pct{font-size:15px;font-weight:800;color:var(--text2);}
 .summary-bar{height:5px;border-radius:999px;background:var(--border2);margin-top:6px;overflow:hidden;}
 .summary-bar > span{display:block;height:100%;border-radius:999px;}
-.summary-status{display:inline-flex;justify-content:center;min-width:118px;}
+.summary-status-wrap{display:flex;align-items:center;justify-content:center;min-height:100%;padding:8px 0;}
+.summary-status{display:inline-flex;align-items:center;justify-content:center;min-width:156px;padding:9px 16px !important;font-size:13px !important;font-weight:800 !important;line-height:1.1;border-radius:999px;box-shadow:var(--shadow-xs);}
 .summary-client{font-weight:800;font-size:14px;line-height:1.25;color:var(--text);}
 .summary-client-desc{display:block;margin-top:6px;font-size:11px;line-height:1.45;color:var(--text3);font-weight:600;max-width:320px;}
 .summary-falta{font-size:12px;font-weight:800;line-height:1.35;}
@@ -1060,18 +1068,29 @@ tr:hover td{background:#F9FCFF;}
 }
 .summary-mini-pill strong{font-size:11px;color:var(--blue3);}
 .summary-desc-box{
-  background:#F8FBFE;border:1px solid #EAF1F7;border-radius:14px;
-  padding:10px 12px;
+  background:linear-gradient(180deg,#FFFFFF 0%, #F8FBFE 100%);
+  border:1px solid #DCE9F4;border-radius:16px;
+  padding:14px 16px;min-height:152px;min-width:430px;
+  box-shadow:var(--shadow-xs);
 }
-.summary-desc-label{font-size:10px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
-.summary-desc-text{font-size:12px;line-height:1.5;color:var(--text2);font-weight:600;}
-.summary-fila-wrap{display:flex;flex-direction:column;gap:8px;}
-.summary-chip-group{display:flex;flex-wrap:wrap;gap:8px;}
+.summary-desc-label{font-size:11px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+.summary-desc-text{font-size:12px;line-height:1.75;color:var(--text2);font-weight:700;word-break:normal;overflow-wrap:normal;}
+.summary-desc-line{display:block;white-space:nowrap;}
+.summary-desc-line + .summary-desc-line{margin-top:8px;}
+.summary-fila-wrap{display:flex;flex-direction:column;gap:10px;}
+.summary-chip-group{display:none;}
 .summary-order-box{
-  background:#F8FBFE;border:1px solid #EAF1F7;border-radius:14px;padding:9px 10px;
+  background:linear-gradient(180deg,#FFFFFF 0%, #F8FBFE 100%);
+  border:1px solid #DCE9F4;border-radius:16px;padding:14px 16px;min-height:152px;
+  box-shadow:var(--shadow-xs);
 }
-.summary-order-title{font-size:10px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;}
-.summary-order-text{font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.5;word-break:break-word;}
+.summary-order-title{font-size:11px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px;}
+.summary-order-text{font-family:var(--sans);font-size:13px;color:var(--text2);line-height:1.6;word-break:break-word;font-weight:700;}
+.summary-order-line{display:block;}
+.summary-order-line + .summary-order-line{margin-top:8px;}
+.summary-order-line.wait{color:var(--text3);font-weight:800;}
+.summary-order-line.ok{color:var(--green2);}
+.summary-order-line.alert{color:var(--red);}
 .summary-kpi-stack{display:flex;flex-direction:column;gap:8px;align-items:stretch;}
 .summary-kpi-box{
   min-width:88px;background:#F8FBFE;border:1px solid #EAF1F7;border-radius:14px;
@@ -1090,11 +1109,13 @@ tr:hover td{background:#F9FCFF;}
 .summary-coverage-meta{font-size:11px;font-weight:700;color:var(--text3);}
 .summary-bar{height:7px;margin-top:0;background:#DDEAF4;}
 .summary-gap-box{
-  display:flex;flex-direction:column;gap:8px;
-  background:#FBFDFF;border:1px solid #EAF1F7;border-radius:16px;padding:12px 14px;
+  display:flex;flex-direction:column;gap:10px;
+  background:linear-gradient(180deg,#FFFFFF 0%, #F8FBFE 100%);
+  border:1px solid #DCE9F4;border-radius:16px;padding:14px 16px;min-height:152px;
+  box-shadow:var(--shadow-xs);
 }
-.summary-gap-title{font-size:10px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;}
-.summary-gap-main{font-size:18px;font-weight:800;line-height:1.15;letter-spacing:-.03em;}
+.summary-gap-title{font-size:11px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;}
+.summary-gap-main{font-size:18px;font-weight:800;line-height:1.2;letter-spacing:-.03em;}
 .summary-gap-main.red{color:var(--red);}
 .summary-gap-main.amber{color:var(--amber);}
 .summary-gap-main.green{color:var(--green2);}
@@ -2417,9 +2438,15 @@ function renderBitremSummary(){
     const pMB52    = mb52PorCli[cli] || 0;
     const matsInfo = ztsdPorCli[cli] ? Object.entries(ztsdPorCli[cli].mats) : [];
 
-    const descricoes = [...new Set(matsInfo.map(([,m]) => limpa(m.desc||'')).filter(Boolean))]
+    const descricoes = matsInfo
       .slice(0,3)
-      .join(' • ');
+      .map(([mat,m]) => {
+        const palDisp = m.lpp > 0 ? Math.round(((mb52Latas[mat] || 0) / m.lpp) * 10) / 10 : 0;
+        const descTxt = limpa(m.desc||'');
+        return descTxt ? `<span class="summary-desc-line"><strong>${fP(palDisp)}</strong> pal · ${descTxt}</span>` : '';
+      })
+      .filter(Boolean)
+      .join('');
 
     const { atend, excVeics, excPal, atendidos, excedentes } = calcExcedente(lista, pZTSD);
 
@@ -2477,16 +2504,17 @@ function renderBitremSummary(){
       badgeCls = 'blue'; badgeTxt = 'Sem fila';
     }
 
-    if(excVeics > 0){
-      detalheExtra += `<div class="summary-gap-sub" style="color:var(--red)">Excedente na fila: ${excVeics} veículo${excVeics>1?'s':''} · ${fP(excPal)} pallets</div>`;
-    }
+    const linhaWait = totalV>0
+      ? `<span class="summary-order-line wait">${fmtN(totalV)} veículo(s) em wait no GK.</span>`
+      : `<span class="summary-order-line wait">Nenhum veículo em wait para este cliente.</span>`;
 
-    if(placasAtend){
-      detalheExtra += `<div class="summary-plates"><strong style="color:var(--green2)">Atendidos:</strong> ${placasAtend}</div>`;
-    }
-    if(placasExc){
-      detalheExtra += `<div class="summary-plates"><strong style="color:var(--red)">Excedentes:</strong> ${placasExc}</div>`;
-    }
+    const linhaCobertura = atendidos.length > 0
+      ? `<span class="summary-order-line ok">Ordem mais antiga com cobertura: ${atendidos.map(i=>`${i.cavalo}${i.carreta?` · ${i.carreta}`:''}`).join(' · ')}</span>`
+      : '';
+
+    const linhaExcedente = excVeics > 0
+      ? `<span class="summary-order-line alert">Excedente: ${fmtN(excVeics)} veículo(s) · ${fP(excPal)} pallets · ${excedentes.map(i=>`${i.cavalo}${i.carreta?` · ${i.carreta}`:''}`).join(' · ')}</span>`
+      : '';
 
     const trMain  = document.createElement('tr');
     trMain.className = 'summary-main';
@@ -2503,16 +2531,15 @@ function renderBitremSummary(){
           </div>
           <div class="summary-desc-box">
             <div class="summary-desc-label">Descrição consolidada</div>
-            <div class="summary-desc-text">${descricoes || 'Sem descrição consolidada para este cliente.'}</div>
+            <div class="summary-desc-text">${descricoes || '<span class="summary-desc-line">Sem descrição consolidada para este cliente.</span>'}</div>
           </div>
         </div>
       </td>
       <td>
         <div class="summary-fila-wrap">
-          <div class="summary-chip-group">${composicao(veics)}</div>
           <div class="summary-order-box">
             <div class="summary-order-title">Leitura da fila</div>
-            <div class="summary-order-text">${totalV>0 ? `${fmtN(totalV)} veículo(s) em wait no GK.` : 'Nenhum veículo em wait para este cliente.'}${excVeics>0 ? ` Excedente atual: ${fmtN(excVeics)} veículo(s).` : ''}</div>
+            <div class="summary-order-text">${linhaWait}${linhaCobertura}${linhaExcedente}</div>
           </div>
         </div>
       </td>
@@ -2557,11 +2584,12 @@ function renderBitremSummary(){
           <div class="summary-gap-title">Gargalo principal</div>
           <div class="summary-gap-main ${faltaClass}">${faltaMain}</div>
           <div class="summary-gap-sub">${faltaSub}</div>
-          ${detalheExtra}
         </div>
       </td>
       <td style="text-align:center">
-        <span class="badge ${badgeCls} summary-status">${badgeTxt}</span>
+        <div class="summary-status-wrap">
+          <span class="badge ${badgeCls} summary-status">${badgeTxt}</span>
+        </div>
       </td>`;
     tb.appendChild(trMain);
   });
