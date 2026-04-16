@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -2184,7 +2185,7 @@ function analisar(){
 
 // ── TESTE: AÇÃO CONSOLIDADA POR CLIENTE (mantém layout atual) ─────────────────
 function recalcularAcaoPorCliente(){
-  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
+  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
   const norm  = s => limpa(s).toUpperCase();
   const resumo = {};
   const mb52PorMat = {};
@@ -2294,7 +2295,7 @@ function renderBitremSummary(){
   const tb   = document.getElementById('bBitremSummary');
   if(!card || !tb) return;
 
-  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
+  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
   const norm  = s => limpa(s).toUpperCase();
 
   const TIPO_PAL = {
@@ -2345,16 +2346,18 @@ function renderBitremSummary(){
     const mat  = limpa(r['Material']||'');
     const desc = String(r['Descrição Material']||r['Descricao Material']||'');
     const inc  = limpa(r['Incoterms']||'').toUpperCase();
-    const saldo = inc === 'CIF'
-      ? (parseFloat(r['Qtd Rem. Proc']||r['Qtd Rem Proc']||0)||0)
-      : (parseFloat(r['Saldo']||0)||0);
+    const remProc = parseFloat(r['Qtd Rem. Proc']||r['Qtd Rem Proc']||0)||0;
+    const saldoVal = parseFloat(r['Saldo']||0)||0;
+    const saldo = inc === 'CIF' ? (remProc > 0 ? remProc : saldoVal) : saldoVal;
     if(!cli || !mat || saldo <= 0) return;
+    const temBloqueio = String(r['Crédito']||r['Credito']||'').trim() !== '';
     const lpp  = lppDe(desc);
     const pals = lpp > 0 ? Math.round(saldo * 1000 / lpp * 10) / 10 : 0;
-    if(!ztsdPorCli[cli]) ztsdPorCli[cli] = { palletsTotal: 0, mats: {} };
+    if(!ztsdPorCli[cli]) ztsdPorCli[cli] = { palletsTotal: 0, mats: {}, temBloqueio: false };
     if(!ztsdPorCli[cli].mats[mat]) ztsdPorCli[cli].mats[mat] = { lpp, latas: 0, desc };
     ztsdPorCli[cli].mats[mat].latas += saldo * 1000;
     ztsdPorCli[cli].palletsTotal    += pals;
+    if(temBloqueio) ztsdPorCli[cli].temBloqueio = true;
   });
 
   const mb52PorCli = {};
@@ -2461,6 +2464,8 @@ function renderBitremSummary(){
     const placasExc   = excedentes.map(i=>i.cavalo).filter(Boolean).join(' · ');
 
     const faltaPal = pGK > 0 ? Math.max(0, Math.round((pGK - cobertura) * 10) / 10) : 0;
+    const temBloqueioCredito = !!(ztsdPorCli[cli]?.temBloqueio);
+
     let badgeCls = 'green', badgeTxt = '✅ Carregar';
     let faltaMain = 'Cobertura completa';
     let faltaClass = 'green';
@@ -2504,6 +2509,8 @@ function renderBitremSummary(){
       badgeCls = 'blue'; badgeTxt = 'Sem fila';
     }
 
+
+
     const linhaWait = totalV>0
       ? `<span class="summary-order-line wait">${fmtN(totalV)} veículo(s) em wait no GK.</span>`
       : `<span class="summary-order-line wait">Nenhum veículo em wait para este cliente.</span>`;
@@ -2528,6 +2535,7 @@ function renderBitremSummary(){
             <span class="summary-mini-pill">Veículos <strong>${fmtN(totalV)}</strong></span>
             <span class="summary-mini-pill">Materiais <strong>${fmtN(matsInfo.length)}</strong></span>
             <span class="summary-mini-pill">Status <strong>${badgeTxt}</strong></span>
+            ${temBloqueioCredito?`<span style="display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(220,38,38,0.1);color:#991B1B;border:0.5px solid rgba(220,38,38,0.3);">⛔ LIMITE DE CRÉDITO</span>`:''}
           </div>
           <div class="summary-desc-box">
             <div class="summary-desc-label">Descrição consolidada</div>
@@ -3709,21 +3717,23 @@ function loadZTSD0012(inp){
         const inc=String(r['Incoterms']||'').toUpperCase();
         const saldo=parseFloat(r['Saldo']||0)||0;
         const remProc=parseFloat(r['Qtd Rem. Proc']||r['Qtd Rem Proc']||0)||0;
-        const val=inc==='CIF'?remProc:saldo;
+        const val=inc==='CIF'?(remProc>0?remProc:saldo):saldo;
         if(val<=0)return;
+        const temBloqueio=String(r['Crédito']||r['Credito']||'').trim()!=='';
         const cliId=String(r['Cliente']||r['Parceiro AG']||r['Nome Alfa']||'SEM_CLIENTE').trim();
         const cliNome=String(r['Nome Alfa']||r['Cliente']||'SEM CLIENTE').trim();
         const skuId=String(r['Material']||r['Descrição Material']||'SEM_SKU').trim();
         const skuDesc=String(r['Descrição Material']||r['Material']||'SEM DESCRIÇÃO').trim();
         totalMI+=val;
-        if(!porCliente[cliId])porCliente[cliId]={id:cliId,nome:cliNome,qtd:0};
+        if(!porCliente[cliId])porCliente[cliId]={id:cliId,nome:cliNome,qtd:0,bloqueio:false};
         porCliente[cliId].qtd+=val;
+        if(temBloqueio)porCliente[cliId].bloqueio=true;
         if(!porSKU[skuId])porSKU[skuId]={id:skuId,desc:skuDesc,qtd:0};
         porSKU[skuId].qtd+=val;
       });
       const grade={
         total:Math.round(totalMI*1000)/1000,
-        porCliente:Object.values(porCliente).filter(e=>e.qtd>0).sort((a,b)=>b.qtd-a.qtd).map(item=>({...item,qtd:Math.round(item.qtd*1000)/1000})),
+        porCliente:Object.values(porCliente).filter(e=>e.qtd>0).sort((a,b)=>b.qtd-a.qtd).map(item=>({...item,qtd:Math.round(item.qtd*1000)/1000,bloqueio:!!item.bloqueio})),
         porSKU:Object.values(porSKU).filter(e=>e.qtd>0).sort((a,b)=>b.qtd-a.qtd).map(item=>({...item,qtd:Math.round(item.qtd*1000)/1000})),
         dataRef:new Date().toLocaleDateString('pt-BR')
       };
@@ -3761,7 +3771,7 @@ function renderGradeDetalhe(g){
   dataRef.textContent=`Atualizado: ${g.dataRef||'—'}`;
   const topClientes=(g.porCliente||[]).slice(0,10);
   const maxCliente=topClientes[0]?.qtd||1;
-  list.innerHTML=topClientes.map((c,i)=>`<div class="sku-row"><span class="sku-pos">${i+1}</span><span class="sku-name" title="${c.nome||c.cli||c.id}">${c.nome||c.cli||c.id}</span><div class="sku-bar-wrap"><div style="width:${(c.qtd/maxCliente)*100}%;height:100%;border-radius:20px;background:rgba(217,119,6,0.72);"></div></div><span class="sku-qtd" style="color:var(--amber)">${fmtMI(c.qtd)}</span></div>`).join('');
+  list.innerHTML=topClientes.map((c,i)=>`<div class="sku-row"><span class="sku-pos">${i+1}</span><span class="sku-name" title="${c.nome||c.cli||c.id}">${c.nome||c.cli||c.id}${c.bloqueio?` <span style="font-size:9px;font-weight:700;background:rgba(220,38,38,0.12);color:#991B1B;border-radius:3px;padding:1px 5px;vertical-align:middle;">⛔ LIMITE CRÉDITO</span>`:''}</span><div class="sku-bar-wrap"><div style="width:${(c.qtd/maxCliente)*100}%;height:100%;border-radius:20px;background:rgba(217,119,6,0.72);"></div></div><span class="sku-qtd" style="color:var(--amber)">${fmtMI(c.qtd)}</span></div>`).join('');
   const maiorCliente=g.porCliente[0];
   const top3=g.porCliente.slice(0,3).reduce((acc,item)=>acc+(item.qtd||0),0);
   const percTop3=(g.total||0)>0?((top3/g.total)*100).toFixed(1):'0.0';
