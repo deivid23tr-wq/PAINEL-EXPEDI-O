@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1077,7 +1076,7 @@ tr:hover td{background:#F9FCFF;}
 .summary-desc-label{font-size:11px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
 .summary-desc-text{font-size:12px;line-height:1.75;color:var(--text2);font-weight:700;word-break:normal;overflow-wrap:normal;}
 .summary-desc-line{display:block;white-space:nowrap;}
-.summary-desc-line + .summary-desc-line{margin-top:8px;}
+.summary-desc-line + .summary-desc-line{margin-top:12px;}
 .summary-fila-wrap{display:flex;flex-direction:column;gap:10px;}
 .summary-chip-group{display:none;}
 .summary-order-box{
@@ -1965,6 +1964,7 @@ function analisar(){
   // Cada OV = uma entrada separada, identificada por ordem+item
   // Chave: cliente → lista de pedidos (um por OV)
   (S.ztsd||[]).filter(r => {
+    if(String(r['Tipo Ordem']||'').trim().toUpperCase() === 'ZBA3') return false;
     const inc = limpa(r['Incoterms'] || '').toUpperCase();
     const val = inc === 'CIF'
       ? parseFloat(r['Qtd Rem. Proc'] || r['Qtd Rem Proc'] || 0)
@@ -2185,7 +2185,7 @@ function analisar(){
 
 // ── TESTE: AÇÃO CONSOLIDADA POR CLIENTE (mantém layout atual) ─────────────────
 function recalcularAcaoPorCliente(){
-  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
+  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
   const norm  = s => limpa(s).toUpperCase();
   const resumo = {};
   const mb52PorMat = {};
@@ -2213,6 +2213,7 @@ function recalcularAcaoPorCliente(){
   (S.ztsd||[]).forEach(r=>{
     const cli = norm(r['Nome Alfa'] || '');
     if(!cli || !resumo[cli]) return;
+    if(String(r['Tipo Ordem']||'').trim().toUpperCase() === 'ZBA3') return;
 
     const inc = limpa(r['Incoterms'] || '').toUpperCase();
     const pedido = inc === 'CIF'
@@ -2295,7 +2296,7 @@ function renderBitremSummary(){
   const tb   = document.getElementById('bBitremSummary');
   if(!card || !tb) return;
 
-  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
+  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
   const norm  = s => limpa(s).toUpperCase();
 
   const TIPO_PAL = {
@@ -2346,6 +2347,8 @@ function renderBitremSummary(){
     const mat  = limpa(r['Material']||'');
     const desc = String(r['Descrição Material']||r['Descricao Material']||'');
     const inc  = limpa(r['Incoterms']||'').toUpperCase();
+    const tipoOrdem = String(r['Tipo Ordem']||'').trim().toUpperCase();
+    if(tipoOrdem === 'ZBA3') return;
     const remProc = parseFloat(r['Qtd Rem. Proc']||r['Qtd Rem Proc']||0)||0;
     const saldoVal = parseFloat(r['Saldo']||0)||0;
     const saldo = inc === 'CIF' ? (remProc > 0 ? remProc : saldoVal) : saldoVal;
@@ -2446,7 +2449,7 @@ function renderBitremSummary(){
       .map(([mat,m]) => {
         const palDisp = m.lpp > 0 ? Math.round(((mb52Latas[mat] || 0) / m.lpp) * 10) / 10 : 0;
         const descTxt = limpa(m.desc||'');
-        return descTxt ? `<span class="summary-desc-line"><strong>${fP(palDisp)}</strong> pal · ${descTxt}</span>` : '';
+        return descTxt ? `<span class="summary-desc-line"><span style="display:inline-flex;align-items:center;gap:4px;margin-bottom:3px;"><span style="font-size:15px;font-weight:800;color:var(--blue3);letter-spacing:-.03em;line-height:1">${fP(palDisp)}</span><span style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.04em">pal</span></span><span style="display:block;font-size:11px;font-weight:600;color:var(--text2);line-height:1.4;margin-top:1px;white-space:normal;word-break:break-word">${descTxt}</span></span>` : '';
       })
       .filter(Boolean)
       .join('');
@@ -2547,7 +2550,7 @@ function renderBitremSummary(){
         <div class="summary-fila-wrap">
           <div class="summary-order-box">
             <div class="summary-order-title">Leitura da fila</div>
-            <div class="summary-order-text">${linhaWait}${linhaCobertura}${linhaExcedente}</div>
+            <div class="summary-order-text">${detalheExtra}${linhaWait}${linhaCobertura}${linhaExcedente}</div>
           </div>
         </div>
       </td>
@@ -3627,6 +3630,7 @@ function loadMB52(inp){
       rows.push({
         material,
         descricao,
+        centro,
         livre,
         qualidade,
         bloqueado,
@@ -3714,6 +3718,7 @@ function loadZTSD0012(inp){
       const porCliente={}, porSKU={};
       raw.forEach(r=>{
         const centro=String(r['Centro']||'').trim();if(centro && centro!=='BR3R' && centro!=='RISC')return;
+        const tipoOrdem=String(r['Tipo Ordem']||'').trim().toUpperCase();if(tipoOrdem==='ZBA3')return;
         const inc=String(r['Incoterms']||'').toUpperCase();
         const saldo=parseFloat(r['Saldo']||0)||0;
         const remProc=parseFloat(r['Qtd Rem. Proc']||r['Qtd Rem Proc']||0)||0;
@@ -3945,22 +3950,24 @@ function numeroSeguro(v){
 
 function detectarMlLata(material,descricao){
   const texto=normalizarTextoOcup(`${material} ${descricao}`);
+  if(/9\.1OZ/i.test(texto)) return 269;
+  if(/16OZ/i.test(texto)) return 473;
   if(/\b473\b/.test(texto)) return 473;
   if(/\b269\b/.test(texto)) return 269;
   if(/\b355\b/.test(texto)) return 355;
   if(/\b350\b/.test(texto)) return 350;
-  if(/\b340\b/.test(texto)) return 340;
+  if(/\b340\b/.test(texto)) return 350;
   if(/\b310\b/.test(texto)) return 310;
+  if(/\b410\b/.test(texto)) return 410;
   return 350;
 }
 
 function conversaoPalletLata(ml){
-  // A MB52 da LATA está em MI, então a conversão precisa ser MI por pallet.
-  // Mantém TAMPA e TAMPA BÁSICA intactas.
-  // 269 ml ≈ 11.088 MI/pallet
-  // 473 ml ≈ 6.224 MI/pallet
-  // 350/355/340 ml ≈ 8.169 MI/pallet
   if(ml===269) return 11.088;
+  if(ml===310) return 9.504;
+  if(ml===350) return 8.169;
+  if(ml===355) return 8.448;
+  if(ml===410) return 6.608;
   if(ml===473) return 6.224;
   return 8.169;
 }
@@ -4019,6 +4026,7 @@ function calcularOcupacaoMB52(rows){
   const topMateriais=[];
 
   (rows||[]).forEach(item=>{
+    if((item.centro||'')!=='BR3R') return;
     const estoqueEspecial=String(item.estoqueEspecialNumero||'').trim();
     if(estoqueEspecial==='72767') return;
 
