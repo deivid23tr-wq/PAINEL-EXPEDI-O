@@ -3818,6 +3818,7 @@ function loadZTSD123(inp){
     const pm={}, porDia={}, topFat={}, porCliente={}, porSKU={};
     raw.forEach(r=>{
       const centro=String(r['Centro']||'').trim();if(centro && centro!=='BR3R' && centro!=='RISC')return;
+      const tpFatura=String(r['Tp.Fatura']||r['Tp Fatura']||r['TP FATURA']||r['Tipo Fatura']||r['Tipo de Fatura']||r['Tp.fatura']||'').trim().toUpperCase();if(tpFatura==='ZBA3')return;
       const dt=r['Dt.Remessa']||r['Data de remessa']||r['Data Remessa']||r['Data'];
       const qtd=parseFloat(r['Qtd.Fornecida']||r['Qtd Fornecida']||r['Quantidade']||0)||0;
       if(!dt||!isFinite(qtd)||qtd<=0)return;
