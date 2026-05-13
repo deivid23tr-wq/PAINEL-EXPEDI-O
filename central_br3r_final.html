@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -1180,6 +1181,168 @@ tr:hover td{background:#F9FCFF;}
   .summary-kpi-box,.summary-coverage-card{min-width:auto;text-align:left;}
 }
 
+
+
+/* ══ VISUAL PREMIUM — RESUMO DE VEÍCULOS POR CLIENTE ════════════
+   Ajuste somente visual: não altera cálculo, dados, filtros ou funções. */
+#bitremSummaryCard .card{
+  overflow:hidden;
+  border-radius:28px;
+  background:linear-gradient(180deg,#FFFFFF 0%,#F8FBFE 100%);
+  border:1px solid #DDEAF4;
+  box-shadow:0 20px 60px rgba(15,76,123,.10);
+}
+#bitremSummaryCard .card-pad{
+  padding:24px 28px 16px !important;
+  background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(247,251,254,.92));
+}
+#bitremSummaryCard .card-title{
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:-.55px;
+  color:#12324D;
+}
+#bitremSummaryCard .card-sub{
+  font-size:12px;
+  color:#617C95;
+  font-weight:600;
+}
+.summary-legend{
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  gap:9px;
+  flex-wrap:wrap;
+}
+.legend-status{
+  min-width:auto !important;
+  padding:7px 14px !important;
+  font-size:12px !important;
+  line-height:1 !important;
+  box-shadow:none !important;
+}
+#tBitremSummary{
+  border-spacing:0 16px;
+}
+#tBitremSummary thead th{
+  padding:8px 18px 12px;
+  font-size:10px;
+  color:#5E7890;
+  letter-spacing:.75px;
+}
+#tBitremSummary thead th span{
+  color:#8EA4B8;
+  font-weight:700 !important;
+}
+#tBitremSummary tbody tr.summary-main td{
+  background:linear-gradient(180deg,#FFFFFF 0%,#FBFDFF 100%);
+  border-top:1px solid #DDEAF4;
+  border-bottom:1px solid #DDEAF4;
+  padding:22px 18px;
+  vertical-align:middle;
+  box-shadow:0 10px 28px rgba(15,76,123,.055);
+}
+#tBitremSummary tbody tr.summary-main td:first-child{
+  border-left:5px solid var(--blue);
+  border-radius:18px 0 0 18px;
+}
+#tBitremSummary tbody tr.summary-main td:last-child{
+  border-right:1px solid #DDEAF4;
+  border-radius:0 18px 18px 0;
+}
+#tBitremSummary tbody tr.summary-green td:first-child{border-left-color:var(--green);}
+#tBitremSummary tbody tr.summary-amber td:first-child{border-left-color:var(--amber);}
+#tBitremSummary tbody tr.summary-red td:first-child{border-left-color:var(--red);}
+#tBitremSummary tbody tr.summary-purple td:first-child{border-left-color:var(--purple);}
+#tBitremSummary tbody tr.summary-blue td:first-child{border-left-color:var(--blue);}
+#tBitremSummary tbody tr.summary-main:hover td{
+  background:linear-gradient(180deg,#FFFFFF 0%,#F6FBFF 100%);
+  box-shadow:0 16px 40px rgba(15,76,123,.08);
+}
+.summary-client-name{
+  font-size:18px;
+  color:#12324D;
+  letter-spacing:-.35px;
+}
+.summary-mini-pill{
+  padding:6px 11px;
+  background:#F6FAFE;
+  border-color:#DDEAF4;
+  color:#365773;
+  font-size:10px;
+}
+.summary-mini-pill strong{color:#005A9C;}
+.summary-desc-box,.summary-order-box,.summary-gap-box,.summary-coverage-card,.summary-kpi-box{
+  border-color:#DDEAF4;
+  background:linear-gradient(180deg,#FFFFFF 0%,#F8FBFE 100%);
+  box-shadow:0 1px 2px rgba(12,58,92,.04);
+}
+.summary-desc-box{
+  min-height:134px;
+  padding:15px 17px;
+}
+.summary-desc-label,.summary-order-title,.summary-gap-title,.summary-kpi-label,.summary-coverage-label{
+  color:#87A0B5;
+  font-size:10px;
+  letter-spacing:.09em;
+}
+.summary-desc-text{
+  font-size:11.5px;
+  line-height:1.8;
+  color:#274966;
+}
+.summary-kpi-box{
+  min-width:94px;
+  padding:13px 12px 11px;
+}
+.summary-kpi-value{
+  font-size:24px;
+  color:#12324D;
+}
+.summary-kpi-value.blue{color:#006DB5;}
+.summary-kpi-value.green{color:#047857;}
+.summary-pct{
+  font-size:18px;
+  color:#12324D;
+}
+.summary-bar{
+  height:8px;
+  background:#DCEAF5;
+}
+.summary-gap-main{
+  font-size:17px;
+}
+.summary-gap-sub,.summary-order-text{
+  font-size:12px;
+  color:#294C68;
+}
+.summary-status-wrap{
+  align-items:flex-start;
+  padding-top:0;
+}
+.summary-status{
+  min-width:142px;
+  padding:9px 15px !important;
+  font-size:12px !important;
+  border-radius:999px;
+  box-shadow:none;
+}
+.badge.green{background:#EAFBF4;color:#047857;border-color:#9EE6C7;}
+.badge.green::before{background:#10B981;}
+.badge.amber{background:#FFF8E6;color:#B45309;border-color:#F6D37C;}
+.badge.amber::before{background:#F59E0B;}
+.badge.red{background:#FFF1F2;color:#DC2626;border-color:#F7B7BC;}
+.badge.red::before{background:#EF4444;}
+.badge.purple{background:#F5F0FF;color:#7C3AED;border-color:#D8C7FE;}
+.badge.purple::before{background:#8B5CF6;}
+.badge.blue{background:#EAF6FF;color:#0077C8;border-color:#B8DFFF;}
+.badge.blue::before{background:#0EA5E9;}
+@media(max-width:1200px){
+  #bitremSummaryCard .card-pad{padding:20px 20px 14px !important;}
+  .summary-legend{justify-content:flex-start;}
+  #tBitremSummary tbody tr.summary-main td{padding:18px 14px;}
+}
+
 </style>
 </head>
 <body>
@@ -1296,12 +1459,12 @@ tr:hover td{background:#F9FCFF;}
           </div>
           <div class="card-sub" style="margin-top:4px">Visão consolidada da fila no GK comparando pedido aberto na ZTSD e saldo livre 0700 na MB52.</div>
         </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap" id="bitremLegend">
-          <span style="font-size:11px;background:var(--green-bg);color:var(--green);border:1px solid var(--green-bdr);padding:4px 10px;border-radius:20px;font-weight:700">✅ Coberto</span>
-          <span style="font-size:11px;background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-bdr);padding:4px 10px;border-radius:20px;font-weight:700">⚠️ Parcial</span>
-          <span style="font-size:11px;background:var(--red-bg);color:var(--red);border:1px solid var(--red-bdr);padding:4px 10px;border-radius:20px;font-weight:700">❌ Sem Estoque</span>
-          <span style="font-size:11px;background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bdr);padding:4px 10px;border-radius:20px;font-weight:700">🟣 Ajuste de Pedidos</span>
-          <span style="font-size:11px;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bdr);padding:4px 10px;border-radius:20px;font-weight:700">🔵 Sem Pedido</span>
+        <div class="summary-legend" id="bitremLegend">
+          <span class="badge green summary-status legend-status">✅ Carregar</span>
+          <span class="badge amber summary-status legend-status">⚠️ Parcial</span>
+          <span class="badge red summary-status legend-status">Sem saldo</span>
+          <span class="badge purple summary-status legend-status">Ajuste de pedido</span>
+          <span class="badge blue summary-status legend-status">Sem fila</span>
         </div>
       </div>
     </div>
@@ -2185,7 +2348,7 @@ function analisar(){
 
 // ── TESTE: AÇÃO CONSOLIDADA POR CLIENTE (mantém layout atual) ─────────────────
 function recalcularAcaoPorCliente(){
-  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
+  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
   const norm  = s => limpa(s).toUpperCase();
   const resumo = {};
   const mb52PorMat = {};
@@ -2296,7 +2459,7 @@ function renderBitremSummary(){
   const tb   = document.getElementById('bBitremSummary');
   if(!card || !tb) return;
 
-  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
+  const limpa = s => String(s||'').replace(/[ ​ ]/g,'').trim();
   const norm  = s => limpa(s).toUpperCase();
 
   const TIPO_PAL = {
@@ -2341,9 +2504,18 @@ function renderBitremSummary(){
     if(mat) mb52Latas[mat] = (mb52Latas[mat]||0) + (mi * 1000);
   });
 
+  const formatClienteCodigo = v => {
+    const bruto = limpa(v||'');
+    if(!bruto) return '';
+    const semDecimal = bruto.replace(/\.0+$/,'');
+    const semZeros = semDecimal.replace(/^0+(?=\d)/,'');
+    return semZeros || semDecimal;
+  };
+
   const ztsdPorCli = {};
   (S.ztsd||[]).forEach(r => {
     const cli  = norm(r['Nome Alfa']||'');
+    const codCli = formatClienteCodigo(r['Cliente']||'');
     const mat  = limpa(r['Material']||'');
     const desc = String(r['Descrição Material']||r['Descricao Material']||'');
     const inc  = limpa(r['Incoterms']||'').toUpperCase();
@@ -2356,7 +2528,8 @@ function renderBitremSummary(){
     const temBloqueio = String(r['Crédito']||r['Credito']||'').trim() !== '';
     const lpp  = lppDe(desc);
     const pals = lpp > 0 ? Math.round(saldo * 1000 / lpp * 10) / 10 : 0;
-    if(!ztsdPorCli[cli]) ztsdPorCli[cli] = { palletsTotal: 0, mats: {}, temBloqueio: false };
+    if(!ztsdPorCli[cli]) ztsdPorCli[cli] = { palletsTotal: 0, mats: {}, temBloqueio: false, clienteCodigo: '' };
+    if(codCli && !ztsdPorCli[cli].clienteCodigo) ztsdPorCli[cli].clienteCodigo = codCli;
     if(!ztsdPorCli[cli].mats[mat]) ztsdPorCli[cli].mats[mat] = { lpp, latas: 0, desc };
     ztsdPorCli[cli].mats[mat].latas += saldo * 1000;
     ztsdPorCli[cli].palletsTotal    += pals;
@@ -2420,6 +2593,9 @@ function renderBitremSummary(){
   };
 
   const sorted = [...todos].sort((a,b) => {
+    const pedA = Math.round((ztsdPorCli[a]?.palletsTotal||0) * 10) / 10;
+    const pedB = Math.round((ztsdPorCli[b]?.palletsTotal||0) * 10) / 10;
+    if(pedA !== pedB) return pedB - pedA;
     const pa = palTotal(gkVeics[a]||{}), pb = palTotal(gkVeics[b]||{});
     if(pa !== pb) return pb - pa;
     return a.localeCompare(b);
@@ -2442,6 +2618,8 @@ function renderBitremSummary(){
     const totalV   = lista.length;
     const pZTSD    = Math.round((ztsdPorCli[cli]?.palletsTotal||0) * 10) / 10;
     const pMB52    = mb52PorCli[cli] || 0;
+    const codCli   = ztsdPorCli[cli]?.clienteCodigo || '';
+    const nomeCli  = codCli ? `${cli} - ${codCli}` : cli;
     const matsInfo = ztsdPorCli[cli] ? Object.entries(ztsdPorCli[cli].mats) : [];
 
     const descricoes = matsInfo
@@ -2449,7 +2627,7 @@ function renderBitremSummary(){
       .map(([mat,m]) => {
         const palDisp = m.lpp > 0 ? Math.round(((mb52Latas[mat] || 0) / m.lpp) * 10) / 10 : 0;
         const descTxt = limpa(m.desc||'');
-        return descTxt ? `<span class="summary-desc-line"><span style="display:inline-flex;align-items:center;gap:4px;margin-bottom:3px;"><span style="font-size:15px;font-weight:800;color:var(--blue3);letter-spacing:-.03em;line-height:1">${fP(palDisp)}</span><span style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.04em">pal</span></span><span style="display:block;font-size:11px;font-weight:600;color:var(--text2);line-height:1.4;margin-top:1px;white-space:normal;word-break:break-word">${descTxt}</span></span>` : '';
+        return descTxt ? `<span class="summary-desc-line"><span style="display:inline-flex;align-items:center;gap:4px;margin-bottom:3px;"><span style="font-size:15px;font-weight:800;color:var(--blue3);letter-spacing:-.03em;line-height:1">${fP(palDisp)}</span><span style="font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.04em">pal</span></span><span style="display:block;font-size:11px;font-weight:600;color:var(--text2);line-height:1.4;margin-top:1px;white-space:normal;word-break:break-word"><span style="font-family:var(--mono);font-weight:800;color:var(--blue3)">${mat}</span> - ${descTxt}</span></span>` : '';
       })
       .filter(Boolean)
       .join('');
@@ -2527,12 +2705,12 @@ function renderBitremSummary(){
       : '';
 
     const trMain  = document.createElement('tr');
-    trMain.className = 'summary-main';
+    trMain.className = `summary-main summary-${badgeCls}`;
     trMain.innerHTML = `
       <td>
         <div class="summary-client-wrap">
           <div class="summary-client-top">
-            <div class="summary-client-name">${cli}</div>
+            <div class="summary-client-name">${nomeCli}</div>
           </div>
           <div class="summary-client-kpis">
             <span class="summary-mini-pill">Veículos <strong>${fmtN(totalV)}</strong></span>
